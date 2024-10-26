@@ -1,0 +1,90 @@
+/* Estilo principal del navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .logo {
+    width: 40px;
+    height: auto;
+    margin-right: 0.5rem;
+  }
+  
+  /* Título y logo alineados a la izquierda */
+  .navbar a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .navbar span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  /* Enlaces de navegación al centro */
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s;
+  }
+  
+  .nav-links a:hover {
+    color: #007bff;
+  }
+  
+  /* Enlaces de autenticación a la derecha */
+  .auth-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .auth-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1rem;
+    font-size: 1rem;
+  }
+  
+  .auth-links a:hover {
+    color: #ff6666;
+  }
+  
+  /* Enlace activo */
+  .active {
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  /* Ajustes para móviles */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+  
+    .auth-links {
+      margin-top: 1rem;
+    }
+  }
+  
