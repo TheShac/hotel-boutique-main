@@ -1,0 +1,36 @@
+/* Estilos generales para el popup */
+h2 {
+  text-align: center;
+  color: #3f51b5; /* Color del texto del título */
+  margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+form {
+  max-width: 400px; /* Ancho máximo del formulario */
+  margin: 0 auto; /* Centra el formulario horizontalmente */
+  padding: 20px; /* Espacio interno */
+  background-color: white; /* Color de fondo blanco para el modal */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2); /* Sombra del modal */
+}
+
+/* Estilo para los campos del formulario */
+mat-form-field {
+  width: 100%; /* Asegura que los campos ocupen todo el ancho disponible */
+  margin-bottom: 20px; /* Espacio entre campos */
+}
+
+/* Estilo para el botón de guardar */
+button {
+  width: 100%; /* El botón ocupará todo el ancho disponible */
+  font-size: 16px; /* Tamaño de fuente más grande */
+  padding: 10px; /* Espaciado interior del botón */
+  background-color: #3f51b5; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  border: none; /* Elimina el borde predeterminado */
+}
+
+/* Efecto de hover para el botón */
+button:hover {
+  background-color: #303f9f; /* Color más oscuro al pasar el ratón */
+}

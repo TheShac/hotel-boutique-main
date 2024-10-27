@@ -8,8 +8,30 @@ import { Habitacion } from '../models/habitacion';
 export class ReservaService {
   // Definir un conjunto de habitaciones disponibles para el hotel
   private habitaciones: Habitacion[] = [
-    { id: 1, nombre: 'Suite Deluxe', descripcion: 'Habitación de lujo con vista al mar', precio: 200, disponible: true },
-    { id: 2, nombre: 'Habitación Estándar', descripcion: 'Habitación cómoda y económica', precio: 100, disponible: true },
+    {
+      id: 1,
+      nombre: 'Suite Deluxe',
+      descripcion: 'Habitación de lujo con vista al mar',
+      precio: 200,
+      disponible: true,
+      imagen: '',
+    },
+    {
+      id: 2,
+      nombre: 'Habitación Estándar',
+      descripcion: 'Habitación cómoda y económica',
+      precio: 100,
+      disponible: true,
+      imagen: '',
+    },
+    {
+      id: 3,
+      nombre: 'Habitación Grande',
+      descripcion: 'Habitación Muy Grande',
+      precio: 100,
+      disponible: true,
+      imagen: '',
+    },
     // Puedes agregar más habitaciones aquí...
   ];
 
@@ -27,5 +49,9 @@ export class ReservaService {
       return of(true); // La reserva fue exitosa
     }
     return of(false); // La habitación ya estaba reservada
+  }
+
+  eliminarHabitacion(id: number){
+    this.habitaciones = this.habitaciones.filter((h) => h.id !== id);
   }
 }

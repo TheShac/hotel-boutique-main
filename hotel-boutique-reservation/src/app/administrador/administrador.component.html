@@ -1,34 +1,73 @@
 <div class="container">
-    <h2>Gestión de Habitaciones</h2>
-  
-    <form (ngSubmit)="guardarHabitacion()">
-      <div class="form-group">
-        <label for="nombre">Nombre de la Habitación</label>
-        <input type="text" id="nombre" [(ngModel)]="habitacion.nombre" name="nombre" class="form-control">
-      </div>
-  
-      <div class="form-group">
-        <label for="descripcion">Descripción</label>
-        <textarea id="descripcion" [(ngModel)]="habitacion.descripcion" name="descripcion" class="form-control"></textarea>
-      </div>
-  
-      <div class="form-group">
-        <label for="precio">Precio por Noche</label>
-        <input type="number" id="precio" [(ngModel)]="habitacion.precio" name="precio" class="form-control">
-      </div>
-  
-      <button type="submit" class="btn btn-primary">Guardar Habitación</button>
-    </form>
-  
-    <div *ngFor="let hab of habitaciones" class="mt-3">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{ hab.nombre }}</h5>
-          <p class="card-text">{{ hab.descripcion }}</p>
-          <p><strong>Precio:</strong> {{ hab.precio | currency }}</p>
-          <button (click)="eliminarHabitacion(hab.id)" class="btn btn-danger">Eliminar</button>
-        </div>
+  <h2>Gestión de Habitaciones</h2>
+
+  <form (ngSubmit)="guardarHabitacion()">
+    <div class="form-group">
+      <label for="nombre">Nombre de la Habitación</label>
+      <input
+        type="text"
+        id="nombre"
+        [(ngModel)]="habitacion.nombre"
+        name="nombre"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="descripcion">Descripción</label>
+      <textarea
+        id="descripcion"
+        [(ngModel)]="habitacion.descripcion"
+        name="descripcion"
+        class="form-control"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="precio">Precio por Noche</label>
+      <input
+        type="number"
+        id="precio"
+        [(ngModel)]="habitacion.precio"
+        name="precio"
+        class="form-control"
+      />
+    </div>
+
+    <label for="imagen">URL de la imagen:</label>
+    <input
+      type="text"
+      id="imagen"
+      [(ngModel)]="habitacion.imagen"
+      name="imagen"
+      required
+    />
+
+    <button type="submit" class="btn btn-primary">Guardar Habitación</button>
+    <button (click)="formatear()" class="btn btn-primary">
+      Formatear Cache
+    </button>
+  </form>
+
+  <div *ngFor="let hab of habitaciones" class="mt-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ hab.nombre }}</h5>
+        <img
+          [src]="hab.imagen"
+          alt="Imagen de {{ hab.nombre }}"
+          class="img-fluid"
+        />
+
+        <p class="card-text">{{ hab.descripcion }}</p>
+        <p><strong>Precio Noche:</strong> {{ hab.precio | currency }}</p>
+        <button (click)="eliminarHabitacion(hab.id)" class="btn btn-danger">
+          Eliminar
+        </button>
+        <button (click)="abrirDialogo(hab)" class="btn btn-danger2">
+          Editar
+        </button>
       </div>
     </div>
   </div>
-  
+</div>

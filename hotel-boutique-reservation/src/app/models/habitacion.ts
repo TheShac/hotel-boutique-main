@@ -4,5 +4,6 @@ export interface Habitacion {
     descripcion: string;
     precio: number;
     disponible: boolean;
+    imagen: string;
   }
   
