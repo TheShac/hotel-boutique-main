@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'; // Importa Router para la navegación
+import { ActivatedRoute, Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-habitacion-detalle',

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';  // Asegúrate de tener FormsModule
-import { RouterModule, Routes } from '@angular/router';  // Asegúrate de importar RouterModule
+import { FormsModule } from '@angular/forms';  
+import { RouterModule, Routes } from '@angular/router';  
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -47,7 +47,7 @@ const routes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(routes),  // Aquí debes asegurarte de importar RouterModule con tus rutas
+    RouterModule.forRoot(routes),  
     HttpClientModule,
     EditarHabitacionModule
   ],
