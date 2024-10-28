@@ -38,7 +38,7 @@ export const registerUser = async (req, res) => {
   
     try {
       const [result] = await pool.query(
-        'INSERT INTO users (username, password, role) VALUES (?, ?, ?)',
+        'INSERT INTO usuario (username, password, rol) VALUES (?, ?, ?)',
         [email, hashedPassword, rol]
       );
       res.status(201).json({ message: 'Usuario registrado con éxito', userId: result.insertId });

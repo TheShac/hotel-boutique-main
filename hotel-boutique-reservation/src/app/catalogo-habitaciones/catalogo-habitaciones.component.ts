@@ -52,6 +52,13 @@ export class CatalogoHabitacionesComponent {
         Disponibilidad: 5,
         imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
       },
+      {
+        id: 5,
+        nombre: 'Habitación Ejecutiva',
+        precio: 129990,
+        Disponibilidad: 5,
+        imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
+      },
   
     ];
   }
