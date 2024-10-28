@@ -6,9 +6,9 @@
       <a routerLink="/" routerLinkActive="active">Inicio</a>
       <a routerLink="/about" routerLinkActive="active">Acerca</a>
       <a routerLink="/catalogo" routerLinkActive="active">Servicios</a>
-      <a routerLink="/perfil" routerLinkActive="active">Perfil</a>
 
       <a *ngIf="isAdmin()" routerLink="/admin" routerLinkActive="active">Administración</a>
+      <a *ngIf="isClient()" routerLink="/perfil" routerLinkActive="active">Perfil</a>
       
     </div>
 
@@ -17,5 +17,5 @@
       <a *ngIf="isAuthenticated()" (click)="logout()">Cerrar Sesión</a>
     </div>
 
-  </nav>
+</nav>
   
