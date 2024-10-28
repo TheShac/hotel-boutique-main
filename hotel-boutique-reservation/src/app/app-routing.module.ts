@@ -5,7 +5,7 @@ import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.componen
 import { CatalogoHabitacionesComponent } from './catalogo-habitaciones/catalogo-habitaciones.component';
 import { CarritoComprasComponent } from './carrito-compras/carrito-compras.component';
 import { AdministradorComponent } from './administrador/administrador.component';
-import { AuthGuard } from './auth.guard'; // Importa tu guard de autenticación
+import { AuthGuard } from './auth.guard'; 
 import { RegisterComponent } from './register/register.component';
 import { HabitacionDetalleComponent } from './habitacion-detalle/habitacion-detalle.component';
 import { HomeComponent } from './home/home.component';
