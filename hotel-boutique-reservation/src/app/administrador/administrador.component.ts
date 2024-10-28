@@ -141,7 +141,7 @@ export class AdministradorComponent implements OnInit {
   }
 
   abrirDialogo(habitacion: Habitacion): void {
-    this.mostrarDiv = false; 
+    //this.mostrarDiv = false; 
     const dialogRef = this.dialog.open(EditarHabitacionComponent, {
       data: habitacion,
     });

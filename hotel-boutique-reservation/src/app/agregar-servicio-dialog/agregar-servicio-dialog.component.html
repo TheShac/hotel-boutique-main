@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Agregar Nuevo Servicio</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="servicio.nombre" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Descripción</mat-label>
+    <textarea matInput [(ngModel)]="servicio.descripcion"></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Precio</mat-label>
+    <input matInput type="number" [(ngModel)]="servicio.precio" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-button (click)="agregarServicio()">Agregar</button>
+</div>

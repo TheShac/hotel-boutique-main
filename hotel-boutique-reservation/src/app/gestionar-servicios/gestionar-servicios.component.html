@@ -1,0 +1,44 @@
+<div class="header-container">
+  <h2 class="titulo-servicios">Gestionar Servicios</h2>
+</div>
+
+<!-- Botón "Agregar Servicio" colocado aquí -->
+<div class="btn-container">
+  <button class="btn-agregar" (click)="abrirDialogoAgregarServicio()">
+    Agregar Servicio
+  </button>
+</div>
+
+<table class="tabla-servicios">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Descripción</th>
+      <th>Precio</th>
+      <th>Acciones</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let servicio of servicios">
+      <td>{{ servicio.id }}</td>
+      <td>{{ servicio.nombre }}</td>
+      <td>{{ servicio.descripcion }}</td>
+      <td>
+        {{ servicio.precio > 0 ? (servicio.precio | currency) : "Gratis" }}
+      </td>
+      <td>
+        <button class="btn-gestionar" (click)="eliminarServicio(servicio.id)">
+          Eliminar
+        </button>
+      </td>
+      <td>
+        <button class="btn-gestionar" (click)="abrirEditarServicio(servicio)">
+          Editar
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

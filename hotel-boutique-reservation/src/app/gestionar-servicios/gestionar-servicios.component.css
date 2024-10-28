@@ -1,0 +1,97 @@
+/* Estilos generales para la tabla */
+.tabla-servicios {
+  width: 80%; /* Cambia este valor según sea necesario */
+  max-width: 800px; /* Ancho máximo para la tabla */
+  border-collapse: collapse;
+  margin: 20px auto; /* Centrando la tabla */
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa; /* Fondo claro para la tabla */
+}
+
+/* Encabezados de la tabla */
+.tabla-servicios thead {
+  background-color: #343a40; /* Fondo oscuro para el encabezado */
+  color: #ffffff; /* Texto blanco */
+}
+
+.btn-container {
+  text-align: center;
+  margin-bottom: 20px; /* Espacio entre el botón y la tabla */
+}
+
+/* Estilos para encabezados y filas */
+.tabla-servicios th {
+  padding: 12px;
+  text-align: left;
+  font-size: 16px;
+}
+
+.tabla-servicios tbody tr {
+  border-bottom: 1px solid #dee2e6; /* Línea divisoria entre filas */
+  transition: background-color 0.3s; /* Transición suave al cambiar el fondo */
+}
+
+.tabla-servicios tbody tr:hover {
+  background-color: #e9ecef; /* Color de fondo al pasar el ratón */
+}
+
+.tabla-servicios td {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.column-header {
+  font-weight: bold; /* Hacer que los encabezados de columnas sean más prominentes */
+}
+
+.tabla-servicios td:nth-child(4) {
+  color: #28a745; /* Color verde para los precios */
+  font-weight: bold; /* Negrita para destacar los precios */
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+  .tabla-servicios {
+    font-size: 12px; /* Ajustar tamaño de fuente en pantallas pequeñas */
+  }
+
+  .tabla-servicios th,
+  .tabla-servicios td {
+    padding: 8px; /* Reducir el padding para mejor ajuste */
+  }
+}
+
+.titulo-servicios {
+  text-align: center; /* Centra el título */
+  margin-bottom: 10px; /* Espacio entre el título y la tabla */
+  font-size: 24px; /* Tamaño de fuente del título */
+  color: #343a40; /* Color del texto del título */
+  font-family: Arial, sans-serif; /* Tipo de fuente */
+}
+
+.btn-agregar {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  font-size: 16px; /* Tamaño de fuente del botón */
+}
+
+.btn-agregar:hover {
+  background-color: #0056b3; /* Color de fondo al pasar el mouse */
+}
+
+.btn-gestionar {
+  padding: 6px 12px;
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-gestionar:hover {
+  background-color: #c82333;
+}

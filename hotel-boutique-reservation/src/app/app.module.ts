@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';  
 import { RouterModule, Routes } from '@angular/router';  
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -15,7 +20,11 @@ import { RegisterComponent } from './register/register.component';
 import { HabitacionDetalleComponent } from './habitacion-detalle/habitacion-detalle.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { GestionarServiciosComponent } from './gestionar-servicios/gestionar-servicios.component';
+
 import { EditarHabitacionModule } from './editar-habitacion/editar-habitacion.module';
+import { AgregarServicioDialogModule } from './agregar-servicio-dialog/agregar-servicio-dialog.module';
+import { EditarServicioDialogComponent } from './editar-servicio-dialog/editar-servicio-dialog.component';
 
 
 const routes: Routes = [
@@ -27,6 +36,7 @@ const routes: Routes = [
   { path: 'carrito', component: CarritoComprasComponent },
   { path: 'admin', component: AdministradorComponent },
   { path: 'habitacion/:id', component: HabitacionDetalleComponent },
+  { path: 'gestionServicios', component: GestionarServiciosComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
@@ -43,13 +53,21 @@ const routes: Routes = [
     HabitacionDetalleComponent,
     NavbarComponent,
     FooterComponent,
+    GestionarServiciosComponent,
+    EditarServicioDialogComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     RouterModule.forRoot(routes),  
     HttpClientModule,
-    EditarHabitacionModule
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    EditarHabitacionModule,
+    AgregarServicioDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

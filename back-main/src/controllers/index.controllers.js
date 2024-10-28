@@ -26,10 +26,11 @@ export const login = async (req, res) => {
 };
 
 export const registerUser = async (req, res) => {
-    const { email, password, rol } = req.body;
+    const { email, password } = req.body;
+    const rol = req.body.rol || 'client';
   
     // Verificar que todos los datos requeridos estén presentes
-    if (!email || !password || !rol || !['admin', 'client'].includes(rol)){
+    if (!email || !password || !['admin', 'client'].includes(rol)){
       return res.status(400).json({ message: 'Todos los campos son obligatorios' });
     }
   
