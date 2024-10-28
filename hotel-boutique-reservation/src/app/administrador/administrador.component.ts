@@ -21,6 +21,7 @@ import { trigger, state, style, transition, animate, } from '@angular/animations
   ],
 })
 export class AdministradorComponent implements OnInit {
+  mostrarDiv = true; 
   formatear() {
     localStorage.clear();
     window.location.reload();
@@ -140,6 +141,7 @@ export class AdministradorComponent implements OnInit {
   }
 
   abrirDialogo(habitacion: Habitacion): void {
+    this.mostrarDiv = false; 
     const dialogRef = this.dialog.open(EditarHabitacionComponent, {
       data: habitacion,
     });

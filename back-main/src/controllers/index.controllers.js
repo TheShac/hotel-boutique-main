@@ -26,10 +26,10 @@ export const login = async (req, res) => {
 };
 
 export const registerUser = async (req, res) => {
-    const { email, password, role } = req.body;
+    const { email, password, rol } = req.body;
   
     // Verificar que todos los datos requeridos estén presentes
-    if (!email || !password || !role || !['admin', 'client'].includes(role)){
+    if (!email || !password || !rol || !['admin', 'client'].includes(rol)){
       return res.status(400).json({ message: 'Todos los campos son obligatorios' });
     }
   
@@ -39,7 +39,7 @@ export const registerUser = async (req, res) => {
     try {
       const [result] = await pool.query(
         'INSERT INTO users (username, password, role) VALUES (?, ?, ?)',
-        [email, hashedPassword, role]
+        [email, hashedPassword, rol]
       );
       res.status(201).json({ message: 'Usuario registrado con éxito', userId: result.insertId });
     } 
