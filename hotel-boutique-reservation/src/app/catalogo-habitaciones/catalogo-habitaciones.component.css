@@ -22,24 +22,6 @@
     background-attachment: fixed; /* Fondo fijo al hacer scroll */
   }
   
-  /* Contenedor del carrusel */
-  .carousel-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-  }
-  
-  /* Contenedor para desplazar las tarjetas */
-  .scroll-container {
-    overflow-x: hidden; /* Oculta el contenido desbordado horizontalmente */
-    white-space: nowrap; /* Evita que las tarjetas bajen a una nueva línea */
-    padding: 140px 0; /* Espaciado superior e inferior */
-    display: flex; /* Estilo de flex para alinear las tarjetas en fila */
-    gap: 20px; /* Espaciado entre tarjetas */
-    transition: transform 0.7s ease; /* Transición suave al desplazar */
-    width: 100%; /* Usa el ancho completo del contenedor */
-  }
-  
   /* Contenedor de cada tarjeta individual */
   .card-container {
     display: inline-block; /* Alinea cada tarjeta en fila */
@@ -104,34 +86,5 @@
   /* Cambia el color del botón al pasar el cursor */
   .btn-primary:hover {
     background-color: #0056b3; /* Color al pasar el cursor */
-  }
-  
-  /* Estilo de flechas de desplazamiento */
-  .arrow {
-    background: transparent; /* Fondo transparente */
-    border: none; /* Sin borde */
-    font-size: 32px; /* Tamaño de la flecha */
-    color: #007bff; /* Color de la flecha */
-    cursor: pointer; /* Muestra el cursor de "clic" */
-    z-index: 10; /* Asegura que esté sobre las tarjetas */
-  }
-  
-  /* Cambia el color de la flecha al pasar el cursor */
-  .arrow:hover {
-    color: #0056b3; /* Color de hover en las flechas */
-  }
-  
-  /* Estilo de la flecha izquierda */
-  .left-arrow {
-    margin-right: 10px; /* Margen derecho para separación */
-    position: absolute; /* Posición absoluta dentro del contenedor */
-    left: -60px; /* Desplaza la flecha hacia la izquierda */
-  }
-  
-  /* Estilo de la flecha derecha */
-  .right-arrow {
-    margin-left: 10px; /* Margen izquierdo para separación */
-    position: absolute; /* Posición absoluta dentro del contenedor */
-    right: -60px; /* Desplaza la flecha hacia la derecha */
   }
   
