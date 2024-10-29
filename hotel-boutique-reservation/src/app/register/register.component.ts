@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -8,23 +9,29 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  email: string = '';
-  password: string = '';
-  role: string = 'client'; // Por defecto, rol 'client'
+  registerForm: FormGroup;
+  registrationError = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ){
+    this.registerForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
+    });
+  }
 
-  register() {
-    this.authService.register(this.email, this.password, this.role).subscribe(
-      (response) => {
-        alert('Usuario registrado con éxito');
-        this.router.navigate(['/login']);
-      },
-      (error) => {
-        alert('Error al registrar usuario');
-        console.error(error);
-      }
-    );
+  register(){
+    if(this.registerForm){
+      const { email, password } = this.registerForm.value;
+
+      this.authService.register(email, password, 'client').subscribe({
+        next: () => this.router.navigate(['/login']),
+        error: () => this.registrationError = 'Error al registrar el usuario. Intente nuevamente.'
+      });
+    }
   }
 }
 

@@ -14,7 +14,7 @@ export class AgregarServicioDialogComponent {
     id: 0,
     nombre: '',
     descripcion: '',
-    precio: 0, // Cambiamos a null inicialmente para evitar conflictos
+    precio: 0,
   };
 
   constructor(

@@ -72,3 +72,26 @@ label {
 .register-link a:hover {
   text-decoration: underline;
 }
+
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.error-border input {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+
+.general-error {
+  color: red;
+  font-weight: bold;
+}
+

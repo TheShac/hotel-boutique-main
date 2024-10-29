@@ -35,11 +35,11 @@ export class AdministradorComponent implements OnInit {
     imagen: '',
   };
   habitaciones: Habitacion[] = [];
-  isLoaded = false; // Controla si el componente ha cargado
+  isLoaded = false;
 
   constructor(
     private gestionHabitacionesService: GestionHabitacionesService,
-    private dialog: MatDialog // Inyectar MatDialog
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
