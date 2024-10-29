@@ -1,21 +1,23 @@
-<h1 mat-dialog-title>Agregar Nuevo Servicio</h1>
-<div mat-dialog-content>
-  <mat-form-field>
-    <mat-label>Nombre</mat-label>
-    <input matInput [(ngModel)]="servicio.nombre" />
+<h1 mat-dialog-title>Agregar Nuevo Servicio</h1> <!-- Título del diálogo -->
+
+<div mat-dialog-content> <!-- Contenedor para el contenido del diálogo -->
+  <mat-form-field> <!-- Campo de formulario para el nombre del servicio -->
+    <mat-label>Nombre</mat-label> <!-- Etiqueta para el campo de nombre -->
+    <input matInput [(ngModel)]="servicio.nombre" /> <!-- Campo de entrada para el nombre, vinculado al modelo de servicio -->
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Descripción</mat-label>
-    <textarea matInput [(ngModel)]="servicio.descripcion"></textarea>
+  <mat-form-field> <!-- Campo de formulario para la descripción del servicio -->
+    <mat-label>Descripción</mat-label> <!-- Etiqueta para el campo de descripción -->
+    <textarea matInput [(ngModel)]="servicio.descripcion"></textarea> <!-- Área de texto para la descripción, vinculada al modelo de servicio -->
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Precio</mat-label>
-    <input matInput type="number" [(ngModel)]="servicio.precio" />
+  <mat-form-field> <!-- Campo de formulario para el precio del servicio -->
+    <mat-label>Precio</mat-label> <!-- Etiqueta para el campo de precio -->
+    <input matInput type="number" [(ngModel)]="servicio.precio" /> <!-- Campo de entrada para el precio, vinculado al modelo de servicio -->
   </mat-form-field>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="cancelar()">Cancelar</button>
-  <button mat-button (click)="agregarServicio()">Agregar</button>
+
+<div mat-dialog-actions> <!-- Contenedor para las acciones del diálogo -->
+  <button mat-button (click)="cancelar()">Cancelar</button> <!-- Botón para cancelar la acción y cerrar el diálogo -->
+  <button mat-button (click)="agregarServicio()">Agregar</button> <!-- Botón para agregar el servicio y ejecutar la función correspondiente -->
 </div>
