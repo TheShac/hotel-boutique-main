@@ -26,29 +26,23 @@ export const login = async (req, res) => {
 };
 
 export const registerUser = async (req, res) => {
-    const { email, password } = req.body;
-    const rol = req.body.rol || 'client';
+
+  try {
+    console.log(req.body)
+    const { email, password, rol } = req.body;
+
+    const userRole = rol || 'client';
   
-    // Verificar que todos los datos requeridos estén presentes
-    if (!email || !password || !['admin', 'client'].includes(rol)){
-      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-    }
-  
-    // Encriptar la contraseña antes de guardarla
-    const hashedPassword = await bcrypt.hash(password, 10);
-  
-    try {
-      const [result] = await pool.query(
-        'INSERT INTO usuario (username, password, rol) VALUES (?, ?, ?)',
-        [email, hashedPassword, rol]
-      );
-      res.status(201).json({ message: 'Usuario registrado con éxito', userId: result.insertId });
-    } 
-    catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al registrar el usuario' });
-    }
-  };
+    const [rows] = await pool.query('INSERT INTO usuario (email, password, rol) VALUES (?, ?, ?)',[email,password,userRole]);
+    res.send({
+      rows
+    })
+  } catch (error) {
+    res.status(500).json({ message: 'Error en el servidor' });
+    
+  }
+
+};
 
 
 
