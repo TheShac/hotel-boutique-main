@@ -73,25 +73,19 @@ label {
   text-decoration: underline;
 }
 
-.ng-valid[required], .ng-valid.required  {
-  border-left: 5px solid #42A948; /* green */
+.ng-valid:not(form).ng-touched  {
+  border-left: 10px solid #42A948; /* green */
 }
 
-.ng-invalid:not(form)  {
-  border-left: 5px solid #a94442; /* red */
+.ng-invalid:not(form).ng-touched  {
+  border-left: 10px solid #a94442; /* red */
 }
 
-.error-border input {
+.is-invalid {
   border-color: red;
 }
 
-.error-message {
+.text-danger {
   color: red;
   font-size: 0.9em;
 }
-
-.general-error {
-  color: red;
-  font-weight: bold;
-}
-
