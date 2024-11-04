@@ -72,3 +72,20 @@ label {
 .register-link a:hover {
   text-decoration: underline;
 }
+
+.ng-valid:not(form).ng-touched  {
+  border-left: 10px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form).ng-touched  {
+  border-left: 10px solid #a94442; /* red */
+}
+
+.is-invalid {
+  border-color: red;
+}
+
+.text-danger {
+  color: red;
+  font-size: 0.9em;
+}
