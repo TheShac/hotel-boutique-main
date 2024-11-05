@@ -2,6 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of,BehaviorSubject } from 'rxjs';
 import { map, catchError, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
+interface LoginResponse {
+  success: boolean;
+  user?: {
+    rol: string;
+  };
+}
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +19,7 @@ export class AuthService {
   private userRoleSubject = new BehaviorSubject<string | null>(null);
   userRole$ = this.userRoleSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     const savedRole = localStorage.getItem('userRole');
     this.userRoleSubject.next(savedRole);
   }
@@ -20,17 +28,24 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/register`, { email, password, rol });
   }
 
-  login(email: string, password: string): Observable<boolean> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password }).pipe(
-      
+  login(email: string, password: string): Observable<{ success: boolean; user?: { rol: string } }> {
+    return this.http.post<{ success: boolean; user?: { rol: string } }>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap(response => {
-        if (response && response.user && response.user.rol) {
+        if (response.success && response.user?.rol) {
           this.setUserRole(response.user.rol);
+
+          if(response.user.rol === 'admin'){
+            this.router.navigate(['/admin']);
           }
+          else if(response.user.rol === 'client'){
+            this.router.navigate(['/home']);
+          }
+        }
       }),
-      
-      map(response => !!response.user),
-      catchError(() => of(false))
+      catchError(() => {
+        console.error('Error al iniciar sesión');
+        return of({ success: false });
+      })
     );
   }
 
@@ -38,7 +53,8 @@ export class AuthService {
     this.userRoleSubject.next(rol);
     if (rol ) {
       localStorage.setItem('userRole', rol);
-    } else {
+    } 
+    else {
       localStorage.removeItem('userRole');
     }
   }

@@ -8,21 +8,30 @@ export const ping = async (req,res) => {
 
 // Controlador para login
 export const login = async (req, res) => {
-    const { email, password } = req.body;
-  
-    try {
-      const [rows] = await pool.query('SELECT * FROM usuario WHERE email = ? AND password = ?', [email, password]);
-  
-      if (rows.length > 0) {
-        res.json({ message: 'Inicio de sesión exitoso', user: rows[0] });
-      } 
-      else {
-        res.status(401).json({ message: 'Credenciales incorrectas' });
-      }
+  const { email, password } = req.body;
+
+  try {
+    const [rows] = await pool.query('SELECT * FROM usuario WHERE LOWER(email) = LOWER(?) AND password = ?', [email, password]);
+    console.log('Resultado de la consulta:', rows);
+
+    if (rows.length > 0) {
+      const user = rows[0];
+      res.status(200).json({
+        success: true,
+        user: {
+          id: user.id,
+          email: user.email,
+          rol: user.rol,
+        }
+      });
     } 
-    catch (error) {
-      res.status(500).json({ message: 'Error en el servidor' });
+    else {
+      res.status(401).json({ success: false, message: 'Credenciales incorrectas' });
     }
+  } 
+  catch (error) {
+    res.status(500).json({ success: false, message: 'Error en el servidor' });
+  }
 };
 
 export const registerUser = async (req, res) => {
@@ -43,8 +52,6 @@ export const registerUser = async (req, res) => {
   }
 
 };
-
-
 
   export const ver = async (req, res) => {
    

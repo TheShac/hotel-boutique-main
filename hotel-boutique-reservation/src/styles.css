@@ -1,3 +1,5 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 .container {
     padding-top: 20px;
   }
@@ -29,4 +31,30 @@ footer {
 
 main{
   flex: 1;
+}
+
+mat-form-field {
+  width: 100%; /* Asegura que el campo de formulario ocupe todo el ancho disponible */
+}
+
+/* Ajusta el tamaño de los botones */
+button {
+  width: 100%; /* Asegura que los botones sean de ancho completo */
+  padding: 12px; /* Aumenta el padding para un botón más amplio */
+}
+
+/* Agrega un margen al contenedor del formulario */
+form {
+  max-width: 600px; /* Define un ancho máximo para el formulario */
+  margin: 20px auto; /* Centra el formulario horizontalmente */
+}
+
+button.mat-raised-button {
+  font-size: 16px; /* Aumenta el tamaño de fuente del botón */
+  margin-top: 20px; /* Espacio encima del botón */
+}
+
+h2 {
+  text-align: center; /* Centra el título */
+  margin-bottom: 20px; /* Espacio debajo del título */
 }

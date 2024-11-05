@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';  
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';  
 import { RouterModule, Routes } from '@angular/router';  
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -25,20 +25,8 @@ import { GestionarServiciosComponent } from './gestionar-servicios/gestionar-ser
 import { EditarHabitacionModule } from './editar-habitacion/editar-habitacion.module';
 import { AgregarServicioDialogModule } from './agregar-servicio-dialog/agregar-servicio-dialog.module';
 import { EditarServicioDialogComponent } from './editar-servicio-dialog/editar-servicio-dialog.component';
+import { AppRoutingModule } from './app-routing.module';
 
-
-const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent},
-  { path: 'perfil', component: PerfilUsuarioComponent },
-  { path: 'catalogo', component: CatalogoHabitacionesComponent },
-  { path: 'carrito', component: CarritoComprasComponent },
-  { path: 'admin', component: AdministradorComponent },
-  { path: 'habitacion/:id', component: HabitacionDetalleComponent },
-  { path: 'gestionServicios', component: GestionarServiciosComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
-];
 
 @NgModule({
   declarations: [
@@ -60,7 +48,8 @@ const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    RouterModule.forRoot(routes),  
+    ReactiveFormsModule,
+    AppRoutingModule,
     HttpClientModule,
     MatDialogModule,
     MatFormFieldModule,

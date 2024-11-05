@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5">
   <h3>Iniciar Sesión</h3>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
@@ -10,10 +10,10 @@
         formControlName="email"
         [ngClass]="{ 'is-invalid': emailError }"
       />
-      <div *ngIf="emailError" class="text-danger">Email incorrecto</div>
+      <div *ngIf="emailError" class="text-danger">Por favor ingresa un correo válido.</div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group mt-3">
       <label for="password">Contraseña</label>
       <input
         type="password"
@@ -22,10 +22,10 @@
         formControlName="password"
         [ngClass]="{ 'is-invalid': passwordError }"
       />
-      <div *ngIf="passwordError" class="text-danger">Contraseña incorrecta</div>
+      <div *ngIf="passwordError" class="text-danger">La contraseña es obligatoria.</div>
     </div>
 
-    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    <button type="submit" class="btn btn-primary mt-4" [disabled]="loginForm.invalid">Iniciar Sesión</button>
   </form>
   <p class="register-link">¿No tienes una cuenta? <a routerLink="/register">Regístrate aquí</a></p>
 </div>

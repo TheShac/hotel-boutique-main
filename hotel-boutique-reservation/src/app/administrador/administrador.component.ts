@@ -6,6 +6,7 @@ import { EditarHabitacionComponent } from '../editar-habitacion/editar-habitacio
 import Swal from 'sweetalert2';
 import { trigger, state, style, transition, animate, } from '@angular/animations';
 
+
 @Component({
   selector: 'app-administrador',
   templateUrl: './administrador.component.html',
@@ -129,14 +130,15 @@ export class AdministradorComponent implements OnInit {
     this.cargarHabitaciones();
   }
 
+  // Método para verificar si una imagen se carga correctamente
   verificarImagen(url: string) {
     return new Promise((resolve, reject) => {
-      const img = new Image();
+      const img = new Image(); // Crear un nuevo objeto de imagen
 
       img.onload = () => resolve(true); // La imagen se cargó correctamente
       img.onerror = () => resolve(false); // Error al cargar la imagen
 
-      img.src = url;
+      img.src = url; // Establecer la URL de la imagen
     });
   }
 

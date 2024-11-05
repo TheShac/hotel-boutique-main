@@ -32,6 +32,10 @@ export class NavbarComponent implements OnInit {
   isClient(): boolean {
     return this.userRole === 'client';
   }
+
+  isEmp(): boolean {
+    return this.userRole === 'empleado';
+  }
   
   logout() {
     this.authService.logout();

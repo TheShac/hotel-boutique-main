@@ -6,20 +6,32 @@ import { CatalogoHabitacionesComponent } from './catalogo-habitaciones/catalogo-
 import { CarritoComprasComponent } from './carrito-compras/carrito-compras.component';
 import { AdministradorComponent } from './administrador/administrador.component';
 import { AuthGuard } from './auth.guard'; 
+
 import { RegisterComponent } from './register/register.component';
 import { HabitacionDetalleComponent } from './habitacion-detalle/habitacion-detalle.component';
 import { HomeComponent } from './home/home.component';
+import { GestionarServiciosComponent } from './gestionar-servicios/gestionar-servicios.component';
 
 const routes: Routes = [
+  // Vistas que pueden entrar cualquier usuario
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent},
-  { path: 'perfil', component: PerfilUsuarioComponent, canActivate: [AuthGuard] },
-  { path: 'catalogo', component: CatalogoHabitacionesComponent },
-  { path: 'habitacion/:id', component: HabitacionDetalleComponent },
-  { path: 'carrito', component: CarritoComprasComponent, canActivate: [AuthGuard] },
-  { path: 'admin', component: AdministradorComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  { path: 'catalogo', component: CatalogoHabitacionesComponent,
+    children: [
+    { path: 'habitacion/:id', component: HabitacionDetalleComponent,  }
+    ]
+  },
+
+  // Vistas que pueden entrar solo los clientes 
+  { path: 'perfil', component: PerfilUsuarioComponent,  },
+  { path: 'carrito', component: CarritoComprasComponent,  },
+
+  // Vistas que pueden entrar solo los rol: admin
+  { path: 'admin', component: AdministradorComponent, canActivate: [AuthGuard], data: { expectedRoles: 'admin'} },
+  { path: 'gestionServicios', component: GestionarServiciosComponent,  },
+  
 ];
 
 @NgModule({
