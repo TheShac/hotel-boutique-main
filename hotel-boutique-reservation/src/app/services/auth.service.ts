@@ -24,8 +24,8 @@ export class AuthService {
     this.userRoleSubject.next(savedRole);
   }
 
-  register(email: string, password: string, rol: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, { email, password, rol });
+  register(nombre: string, apellido: string, email: string, password: string, rol: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/register`, { nombre, apellido, email, password, rol });
   }
 
   login(email: string, password: string): Observable<{ success: boolean; user?: { rol: string } }> {

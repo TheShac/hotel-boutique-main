@@ -56,7 +56,7 @@ import { AppRoutingModule } from './app-routing.module';
     MatInputModule,
     MatButtonModule,
     EditarHabitacionModule,
-    AgregarServicioDialogModule,
+    AgregarServicioDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -18,24 +18,24 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent},
-  { path: 'catalogo', component: CatalogoHabitacionesComponent,
-    children: [
-    { path: 'habitacion/:id', component: HabitacionDetalleComponent,  }
-    ]
-  },
+  { path: 'catalogo', component: CatalogoHabitacionesComponent },
+  { path: 'habitacion/:id', component: HabitacionDetalleComponent },
 
   // Vistas que pueden entrar solo los clientes 
-  { path: 'perfil', component: PerfilUsuarioComponent,  },
-  { path: 'carrito', component: CarritoComprasComponent,  },
+  { path: 'perfil', component: PerfilUsuarioComponent, canActivate: [AuthGuard], data: { expectedRoles: ['client','emps','admin']} },
+  { path: 'carrito', component: CarritoComprasComponent, canActivate: [AuthGuard], data: { expectedRoles: ['client','emps','admin']} },
 
   // Vistas que pueden entrar solo los rol: admin
   { path: 'admin', component: AdministradorComponent, canActivate: [AuthGuard], data: { expectedRoles: 'admin'} },
-  { path: 'gestionServicios', component: GestionarServiciosComponent,  },
+  { path: 'gestionServicios', component: GestionarServiciosComponent, canActivate: [AuthGuard], data: { expectedRoles: 'admin'} },
   
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  
+  imports: [
+    RouterModule.forRoot(routes)
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

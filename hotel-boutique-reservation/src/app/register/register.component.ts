@@ -8,6 +8,8 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  nombre: string = '';
+  apellido: string = '';
   email: string = '';
   password: string = '';
   role: string = 'client'; // Por defecto, rol 'client'
@@ -15,7 +17,7 @@ export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   register() {
-    this.authService.register(this.email, this.password, this.role).subscribe(
+    this.authService.register(this.nombre, this.apellido, this.email, this.password, this.role).subscribe(
       (response) => {
         alert('Usuario registrado con éxito');
         this.router.navigate(['/login']);

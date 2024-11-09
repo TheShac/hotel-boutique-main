@@ -11,7 +11,7 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const [rows] = await pool.query('SELECT * FROM usuario WHERE LOWER(email) = LOWER(?) AND password = ?', [email, password]);
+    const [rows] = await pool.query('SELECT * FROM user WHERE LOWER(email) = LOWER(?) AND password = ?', [email, password]);
     console.log('Resultado de la consulta:', rows);
 
     if (rows.length > 0) {
@@ -38,11 +38,11 @@ export const registerUser = async (req, res) => {
 
   try {
     console.log(req.body)
-    const { email, password, rol } = req.body;
+    const { nombre, apellido, email, password, rol } = req.body;
 
     const userRole = rol || 'client';
   
-    const [rows] = await pool.query('INSERT INTO usuario (email, password, rol) VALUES (?, ?, ?)',[email,password,userRole]);
+    const [rows] = await pool.query('INSERT INTO user (nombre, apellido, email, password, rol) VALUES (?, ?, ?, ?, ?)',[nombre, apellido, email, password, userRole]);
     res.send({
       rows
     })
