@@ -1,4 +1,4 @@
-import {pool} from '../db.js';
+import { pool } from '../db.js';
 
 
 export const ping = async (req,res) => {
@@ -34,6 +34,7 @@ export const login = async (req, res) => {
   }
 };
 
+// Controlador para registrar
 export const registerUser = async (req, res) => {
 
   try {
@@ -53,11 +54,11 @@ export const registerUser = async (req, res) => {
 
 };
 
-  export const ver = async (req, res) => {
+export const ver = async (req, res) => {
    
     try {
       const [result] = await pool.query(
-        'select * from usuario'
+        'select * from user'
       );
       res.status(201).json({ result });
     } 
@@ -65,4 +66,33 @@ export const registerUser = async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Error al registrar el usuario' });
     }
-  };
+};
+
+export const usuario = async(req, res) => {
+
+  const { id } = req.params;
+
+  try {
+    const [rows] = await pool.query('SELECT * FROM user WHERE id = ?', [id]);
+    
+    if (rows.length > 0) {
+      const user = rows[0];
+      res.status(201).json({
+        success: true,
+        user: {
+          id: user.id,
+          nombre: user.nombre,
+          apellido: user.apellido,
+          email: user.email
+        }
+      });
+    } 
+    else {
+      res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+    }
+  }
+  catch (error) {
+    console.error('Error al obtener datos del usuario:', error);
+    res.status(500).json({ success: false, message: 'Error en el servidor' });
+  }
+};

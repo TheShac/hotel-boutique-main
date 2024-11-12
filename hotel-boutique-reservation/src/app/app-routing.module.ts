@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'habitacion/:id', component: HabitacionDetalleComponent },
 
   // Vistas que pueden entrar solo los clientes 
-  { path: 'perfil', component: PerfilUsuarioComponent, canActivate: [AuthGuard], data: { expectedRoles: ['client','emps','admin']} },
+  { path: 'perfil', component: PerfilUsuarioComponent, /*canActivate: [AuthGuard], data: { expectedRoles: ['client','emps','admin']} */},
   { path: 'carrito', component: CarritoComprasComponent, canActivate: [AuthGuard], data: { expectedRoles: ['client','emps','admin']} },
 
   // Vistas que pueden entrar solo los rol: admin

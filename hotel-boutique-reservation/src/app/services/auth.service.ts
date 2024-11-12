@@ -8,6 +8,9 @@ interface LoginResponse {
   success: boolean;
   user?: {
     rol: string;
+    nombre?: string;
+    apellido?: string;
+    email?: string;
   };
 }
 
@@ -17,6 +20,8 @@ interface LoginResponse {
 export class AuthService {
   private apiUrl = 'http://localhost:3000';
   private userRoleSubject = new BehaviorSubject<string | null>(null);
+  
+
   userRole$ = this.userRoleSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
@@ -33,6 +38,7 @@ export class AuthService {
       tap(response => {
         if (response.success && response.user?.rol) {
           this.setUserRole(response.user.rol);
+          
 
           if(response.user.rol === 'admin'){
             this.router.navigate(['/admin']);
@@ -66,6 +72,7 @@ export class AuthService {
   isAuthenticated(): boolean {
     return !!this.getRole(); // Retorna true si hay un rol, indicando autenticación
   }
+  
 
   logout() {
     this.setUserRole(null);
