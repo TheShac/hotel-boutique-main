@@ -73,7 +73,6 @@ export class AuthService {
     return !!this.getRole(); // Retorna true si hay un rol, indicando autenticación
   }
   
-
   logout() {
     this.setUserRole(null);
   }

@@ -12,10 +12,12 @@ export const login = async (req, res) => {
 
   try {
     const [rows] = await pool.query('SELECT * FROM user WHERE LOWER(email) = LOWER(?) AND password = ?', [email, password]);
-    console.log('Resultado de la consulta:', rows);
+    //console.log('Resultado de la consulta:', rows);
 
     if (rows.length > 0) {
       const user = rows[0];
+      req.session.userId = user.id;
+
       res.status(200).json({
         success: true,
         user: {
@@ -70,14 +72,14 @@ export const ver = async (req, res) => {
 
 export const usuario = async(req, res) => {
 
-  const { id } = req.params;
+  const id = req.session.userId;
 
   try {
     const [rows] = await pool.query('SELECT * FROM user WHERE id = ?', [id]);
     
     if (rows.length > 0) {
       const user = rows[0];
-      res.status(201).json({
+      res.status(200).json({
         success: true,
         user: {
           id: user.id,

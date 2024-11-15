@@ -12,7 +12,7 @@ export class PerfilUsuarioComponent implements OnInit {
   usuario: any = {
     nombre: 'a',
     apellido: 'a',
-    email: 'a'
+    email: ''
   };
 
   reservas: { habitacion: Habitacion, fecha: string }[] = [];
