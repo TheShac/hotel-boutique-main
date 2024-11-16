@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
   }
 
   isEmp(): boolean {
-    return this.userRole === 'empleado';
+    return this.userRole === 'empleado' || this.userRole === 'admin';
   }
   
   logout() {

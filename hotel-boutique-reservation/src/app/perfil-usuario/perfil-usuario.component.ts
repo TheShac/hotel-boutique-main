@@ -9,19 +9,16 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './perfil-usuario.component.html',
 })
 export class PerfilUsuarioComponent implements OnInit {
-  usuario: any = {
-    nombre: 'a',
-    apellido: 'a',
-    email: ''
-  };
+ 
 
   reservas: { habitacion: Habitacion, fecha: string }[] = [];
   historialReservas: { habitacion: Habitacion, fecha: string }[] = [];
 
   constructor(private reservaService: ReservaService, private authService: AuthService) {}
-
+  const usuario ;
   ngOnInit(): void {
 
+    
     // Simulación de reservas activas y pasadas
     this.reservaService.getHabitaciones().subscribe(data => {
       const habitacionesReservadas = data.filter(habitacion => !habitacion.disponible);
