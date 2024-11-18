@@ -54,19 +54,23 @@ En tu carpeta backend (`cd .../backend`) ejecutar el comando `npm install` o `np
 Crea una base de datos en MySQL, por ejemplo: hotel_boutique.<br/>
 Ejecuta el script SQL de creación de tablas.<br/>
 
-`create database hotel;` crear base de datos.<br/>
-`use hotel;` usar la base de datos.<br/>
-`CREATE TABLE usuario
+```sql
+create database hotel; --crear base de datos.
+use hotel; --usar la base de datos.
+CREATE TABLE user
 (
-  id INT NOT NULL AUTO_INCREMENT,
-  email VARCHAR(255) NOT NULL,
-  password VARCHAR(255) NOT NULL,
-  rol ENUM('client', 'admin', empleado) NOT NULL,
-  PRIMARY KEY (id),
-  UNIQUE (email)
-);` creación de la tabla usuario.<br/>
-`insert into usuario values(1, 'admin@hotel.com', 'admin123', 'admin');` crear usuario en la base de datos.<br/>
-`select * from usuario;` probar el funcionamiento de la tabla.<br/>
+    id INT NOT NULL auto_increment,
+    nombre VARCHAR(50) NOT NULL,
+	  apellido VARCHAR(50) NOT NULL,
+    email VARCHAR(225) NOT NULL,
+    password VARCHAR(225) NOT NULL,
+    rol ENUM('client', 'emps', 'admin') NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE (email)
+); --creación de la tabla usuario.
+insert into user values(1, 'leonardo', 'rodriguez', 'administrador@hotel.com', 'admin123', 'admin'); --crear usuario en la base de datos.
+select * from user; --probar el funcionamiento de la tabla.
+```
 
 #### 3. Configurar variables de entorno:
 
