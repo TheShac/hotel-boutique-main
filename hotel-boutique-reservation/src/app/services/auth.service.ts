@@ -36,8 +36,10 @@ export class AuthService {
     return this.http.post<{ success: boolean; user: { rol: string , nombre: string, apellido: string, email: string  } }>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap(response => {
         if (response.success && response.user?.rol) {
+
           this.setUserRole(response.user.rol);          
           this.setUsuario(response.user.nombre, response.user.apellido, response.user.email);
+          
           if(response.user.rol === 'admin'){
             this.router.navigate(['/admin']);
           }

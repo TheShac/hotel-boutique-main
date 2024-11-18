@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-perfil-usuario',
   templateUrl: './perfil-usuario.component.html',
+  styleUrls: ['./perfil-usuario.component.css']
 })
 export class PerfilUsuarioComponent implements OnInit {
  
@@ -14,10 +15,20 @@ export class PerfilUsuarioComponent implements OnInit {
   reservas: { habitacion: Habitacion, fecha: string }[] = [];
   historialReservas: { habitacion: Habitacion, fecha: string }[] = [];
 
+  // Variables para almacenar los datos del usuario
+  nombre: string | null = '';
+  apellido: string | null = '';
+  email: string | null = '';
+
   constructor(private reservaService: ReservaService, private authService: AuthService) {}
-  const usuario ;
+  
   ngOnInit(): void {
 
+    // Obtener los datos del usuario al inicializar el componente
+    const usuario = this.authService.getUsuario();
+    this.nombre = usuario.nombre;
+    this.apellido = usuario.apellido;
+    this.email = usuario.email;
     
     // Simulación de reservas activas y pasadas
     this.reservaService.getHabitaciones().subscribe(data => {
