@@ -40,7 +40,9 @@ Asegúrate de tener instalados los siguientes programas:
 
 ## Clonar el repositorio
 
-```git clone https://github.com/TheShac/hotel-boutique-main.git```
+```bash
+git clone https://github.com/TheShac/hotel-boutique-main.git
+```
 
 ## Configuración del backend
 
