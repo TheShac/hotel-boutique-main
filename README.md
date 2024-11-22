@@ -47,7 +47,14 @@ git clone https://github.com/TheShac/hotel-boutique-main.git
 ## Configuración del backend
 
 #### 1. Instalar dependencias:
-En tu carpeta backend (`cd .../backend`) ejecutar el comando `npm install` o `npm i`.
+En tu carpeta backend (`cd .../backend`) ejecutar el comando 
+```bash
+npm install
+```
+ o 
+```bash
+ npm i
+```
 
 #### 2. Configurar base de datos:
 
@@ -68,38 +75,53 @@ CREATE TABLE user
     PRIMARY KEY (id),
     UNIQUE (email)
 ); --creación de la tabla usuario.
-insert into user values(1, 'leonardo', 'rodriguez', 'administrador@hotel.com', 'admin123', 'admin'); --crear usuario en la base de datos.
+insert into user values(1, 'nombre', 'apellido', 'administrador@hotel.com', 'admin123', 'admin'); --crear usuario en la base de datos.
 select * from user; --probar el funcionamiento de la tabla.
 ```
 
 #### 3. Configurar variables de entorno:
 
 Crea una carpeta `/config` y un archivo `config.js` en el directorio `backend` con la siguiente configuración:<br/><br/>
-`import { config } from "dotenv";`<br/>
+```js
+import { config } from "dotenv";
 
-`config()`<br/>
+config()
 
-`export const PORT=process.env.PORT || 3000`<br/>
-`export const DB_HOST=process.env.DB_HOST || 'localhost'`<br/>
-`export const DB_PORT=process.env.DB_PORT || puerto`<br/>
-`export const DB_USER=process.env.DB_USER || 'user'`<br/>
-`export const DB_PASSWORD=process.env.DB_PASSWORD || 'password'`<br/>
-`export const DB_DATABASE=process.env.DB_DATABASE || 'database_name'`<br/>
+export const PORT=process.env.PORT || 3000
+export const DB_HOST=process.env.DB_HOST || 'localhost'
+export const DB_PORT=process.env.DB_PORT || puerto
+export const DB_USER=process.env.DB_USER || 'user'
+export const DB_PASSWORD=process.env.DB_PASSWORD || 'password'
+export const DB_DATABASE=process.env.DB_DATABASE || 'database_name'
+```
 
 #### 4. Iniciar el servidor:
 
-`npm start`<br/>
+```bash
+npm start
+```
 
 ## Configuración del frontend
 #### 1. Instalar dependencias:
-En tu carpeta frontend (`cd .../frontend`) ejecutar el comando `npm install` o `npm i`.<br/>
+En tu carpeta frontend (`cd .../frontend`) ejecutar el comando 
+```bash
+npm install
+```
+ o 
+ ```bash
+ npm i
+```
 
 #### 2. Configurar variables de entorno:
-En el archivo src/sercives/auth.service.ts, dentro de la clase AuthService configura la URL de tu backend:<br/>
-`private apiUrl = 'http://localhost:3000';`<br/>
+En el archivo `src/sercives/auth.service.ts`, dentro de la clase AuthService configura la URL de tu backend:
+```ts
+private apiUrl = 'http://localhost:3000';
+```
 
 #### 4. Iniciar la aplicación de Angular:
-`ng serve` o `npm start` </br>
+```bash
+npm start
+```
 La aplicación estará disponible en `http://localhost:4200`.<br/>
 ## Roles de usuario
 <strong>Administrador:</strong><br/>
