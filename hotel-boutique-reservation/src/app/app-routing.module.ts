@@ -11,6 +11,7 @@ import { RegisterComponent } from './register/register.component';
 import { HabitacionDetalleComponent } from './habitacion-detalle/habitacion-detalle.component';
 import { HomeComponent } from './home/home.component';
 import { GestionarServiciosComponent } from './gestionar-servicios/gestionar-servicios.component';
+import { EmpleadoComponent } from './empleado/empleado.component';
 
 const routes: Routes = [
   // Vistas que pueden entrar cualquier usuario
@@ -22,8 +23,11 @@ const routes: Routes = [
   { path: 'habitacion/:id', component: HabitacionDetalleComponent },
 
   // Vistas que pueden entrar solo los clientes 
-  { path: 'perfil', component: PerfilUsuarioComponent, /*canActivate: [AuthGuard], data: { expectedRoles: ['client','emps','admin']} */},
-  { path: 'carrito', component: CarritoComprasComponent, canActivate: [AuthGuard], data: { expectedRoles: ['client','emps','admin']} },
+  { path: 'perfil', component: PerfilUsuarioComponent, canActivate: [AuthGuard], data: { expectedRoles: 'client'} },
+  { path: 'carrito', component: CarritoComprasComponent, canActivate: [AuthGuard], data: { expectedRoles: 'client'} },
+
+  // Vista de empleado
+  { path: 'empleado', component: EmpleadoComponent, canActivate: [AuthGuard], data: { expectedRoles: ['empleado', 'admin']} },
 
   // Vistas que pueden entrar solo los rol: admin
   { path: 'admin', component: AdministradorComponent, canActivate: [AuthGuard], data: { expectedRoles: 'admin'} },

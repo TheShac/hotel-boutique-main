@@ -1,0 +1,36 @@
+.reservas-admin-container {
+    max-width: 900px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+}
+
+.card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card-body {
+    display: flex;
+    align-items: center;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+button.btn-link {
+    font-size: 0.875rem;
+    text-decoration: underline;
+    padding: 0;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}

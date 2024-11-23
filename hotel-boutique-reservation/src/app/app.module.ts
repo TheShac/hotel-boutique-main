@@ -26,6 +26,7 @@ import { EditarHabitacionModule } from './editar-habitacion/editar-habitacion.mo
 import { AgregarServicioDialogModule } from './agregar-servicio-dialog/agregar-servicio-dialog.module';
 import { EditarServicioDialogComponent } from './editar-servicio-dialog/editar-servicio-dialog.component';
 import { AppRoutingModule } from './app-routing.module';
+import { EmpleadoComponent } from './empleado/empleado.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { AppRoutingModule } from './app-routing.module';
     NavbarComponent,
     FooterComponent,
     GestionarServiciosComponent,
-    EditarServicioDialogComponent
+    EditarServicioDialogComponent,
+    EmpleadoComponent
   ],
   imports: [
     BrowserModule,
