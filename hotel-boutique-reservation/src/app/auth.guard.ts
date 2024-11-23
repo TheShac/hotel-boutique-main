@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { FOCUS_MONITOR_DEFAULT_OPTIONS } from '@angular/cdk/a11y';
 
 @Injectable({
   providedIn: 'root',
