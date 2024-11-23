@@ -58,3 +58,5 @@ h2 {
   text-align: center; /* Centra el título */
   margin-bottom: 20px; /* Espacio debajo del título */
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
