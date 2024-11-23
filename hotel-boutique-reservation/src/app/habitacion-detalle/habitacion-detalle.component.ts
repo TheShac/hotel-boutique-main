@@ -1,90 +1,184 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'; 
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-habitacion-detalle',
   templateUrl: './habitacion-detalle.component.html',
-  styleUrls: ['./habitacion-detalle.component.css']
+  styleUrls: ['./habitacion-detalle.component.css'],
 })
 export class HabitacionDetalleComponent implements OnInit {
   habitacion: any;
+  userId: number | null = null; // Almacena el ID del usuario autenticado
 
   habitaciones = [
     {
       id: 1,
       nombre: 'Habitación Estandar',
       descripcion: 'Amplia habitación ideal para familias.',
-      precio: 120,
+      precio: 120000,
       disponibilidad: 5,
-      imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbcovz_00_p_1024x768.jpg' ,
+      imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbcovz_00_p_1024x768.jpg',
       fotos: [
         'https://www.ahstatic.com/photos/b5w1_rodbcovz_03_p_1024x768.jpg',
         'https://www.ahstatic.com/photos/b5w1_rodbcovz_04_p_1024x768.jpg',
-        'https://www.ahstatic.com/photos/b5w1_rodbcovz_05_p_1024x768.jpg' ,
+        'https://www.ahstatic.com/photos/b5w1_rodbcovz_05_p_1024x768.jpg'
       ]
     },
     {
       id: 2,
       nombre: 'Habitación Twin',
-      descripcion: 'Amplia habitación ideal para familias.',
-      precio: 80,
-      disponibilidad: 2,
+      descripcion: 'Habitación acogedora con dos camas individuales.',
+      precio: 119990,
+      disponibilidad: 5,
       imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rod3cov_00_p_1024x768.jpg',
       fotos: [
         'https://www.ahstatic.com/photos/b5w1_rod3cov_01_p_1024x768.jpg',
-        'https://www.ahstatic.com/photos/b5w1_rod3cov_02_p_1024x768.jpg',
-
+        'https://www.ahstatic.com/photos/b5w1_rod3cov_02_p_1024x768.jpg'
       ]
     },
     {
       id: 3,
       nombre: 'Habitación Superior',
-      descripcion: 'Amplia habitación ideal para familias.',
-      precio: 80,
-      disponibilidad: 2,
+      descripcion: 'Habitación de lujo con vistas espectaculares.',
+      precio: 159990,
+      disponibilidad: 5,
       imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbbofz_00_p_1024x768.jpg',
       fotos: [
         'https://www.ahstatic.com/photos/b5w1_rodbbofz_01_p_1024x768.jpg',
-        'https://www.ahstatic.com/photos/b5w1_rodbbofz_02_p_1024x768.jpg',
-
+        'https://www.ahstatic.com/photos/b5w1_rodbbofz_02_p_1024x768.jpg'
       ]
     },
     {
       id: 4,
       nombre: 'Habitación Ejecutiva',
       descripcion: 'Habitación con vista panorámica y baño privado.',
-      precio: 120,
-      disponibilidad: 1,
+      precio: 129990,
+      disponibilidad: 5,
       imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg',
       fotos: [
         'https://www.ahstatic.com/photos/b5w1_rodbaofz_01_p_1024x768.jpg',
         'https://www.ahstatic.com/photos/b5w1_rodbaofz_02_p_1024x768.jpg',
-        'https://www.ahstatic.com/photos/b5w1_rodbaofz_03_p_1024x768.jpg',
-
+        'https://www.ahstatic.com/photos/b5w1_rodbaofz_03_p_1024x768.jpg'
       ]
     },
+    {
+      id: 5,
+      nombre: 'Habitación Familiar',
+      descripcion: 'Amplia habitación ideal para familias grandes.',
+      precio: 129990,
+      disponibilidad: 10,
+      imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbcovz_00_p_1024x768.jpg',
+      fotos: [
+        'https://www.ahstatic.com/photos/b5w1_rodbcovz_03_p_1024x768.jpg',
+        'https://www.ahstatic.com/photos/b5w1_rodbcovz_04_p_1024x768.jpg',
+        'https://www.ahstatic.com/photos/b5w1_rodbcovz_05_p_1024x768.jpg'
+      ]
+    },
+    {
+      id: 6,
+      nombre: 'Habitación Suite Deluxe',
+      descripcion: 'Suite de lujo con servicios premium.',
+      precio: 189990,
+      disponibilidad: 3,
+      imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rod3cov_00_p_1024x768.jpg',
+      fotos: [
+        'https://www.ahstatic.com/photos/b5w1_rod3cov_01_p_1024x768.jpg',
+        'https://www.ahstatic.com/photos/b5w1_rod3cov_02_p_1024x768.jpg'
+      ]
+    },
+    {
+      id: 7,
+      nombre: 'Habitación Junior Suite',
+      descripcion: 'Cómoda habitación con diseño moderno.',
+      precio: 179990,
+      disponibilidad: 4,
+      imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbbofz_00_p_1024x768.jpg',
+      fotos: [
+        'https://www.ahstatic.com/photos/b5w1_rodbbofz_01_p_1024x768.jpg',
+        'https://www.ahstatic.com/photos/b5w1_rodbbofz_02_p_1024x768.jpg'
+      ]
+    },
+    {
+      id: 8,
+      nombre: 'Habitación Premium',
+      descripcion: 'Habitación exclusiva con servicios personalizados.',
+      precio: 199990,
+      disponibilidad: 2,
+      imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg',
+      fotos: [
+        'https://www.ahstatic.com/photos/b5w1_rodbaofz_01_p_1024x768.jpg',
+        'https://www.ahstatic.com/photos/b5w1_rodbaofz_02_p_1024x768.jpg',
+        'https://www.ahstatic.com/photos/b5w1_rodbaofz_03_p_1024x768.jpg'
+      ]
+    },
+    {
+      id: 9,
+      nombre: 'Habitación Doble Confort',
+      descripcion: 'Habitación ideal para parejas.',
+      precio: 159990,
+      disponibilidad: 3,
+      imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbcovz_01_p_1024x768.jpg',
+      fotos: [
+        'https://www.ahstatic.com/photos/b5w1_rodbcovz_02_p_1024x768.jpg',
+        'https://www.ahstatic.com/photos/b5w1_rodbcovz_06_p_1024x768.jpg'
+      ]
+    },
+    {
+      id: 10,
+      nombre: 'Habitación Individual Económica',
+      descripcion: 'Habitación ideal para viajeros individuales.',
+      precio: 69990,
+      disponibilidad: 8,
+      imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodsolo_00_p_1024x768.jpg',
+      fotos: [
+        'https://www.ahstatic.com/photos/b5w1_rodsolo_01_p_1024x768.jpg',
+        'https://www.ahstatic.com/photos/b5w1_rodsolo_02_p_1024x768.jpg'
+      ]
+    }
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router) {} // Inyecta Router
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private authService: AuthService // Inyecta AuthService
+  ) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.habitacion = this.habitaciones.find(h => h.id === id);
+    this.habitacion = this.habitaciones.find((h) => h.id === id);
 
     if (!this.habitacion) {
       console.error('Habitación no encontrada');
     }
   }
-
   reservarHabitacion() {
     if (this.habitacion && this.habitacion.disponibilidad > 0) {
-      console.log(`Reservando habitación: ${this.habitacion.nombre}`);
+      const user = this.authService.getCurrentUser(); // Obtén el usuario autenticado
+      const reserva = {
+        usuario_id: user?.id, // ID del usuario autenticado
+        habitacion_id: this.habitacion.id,
+      };
+  
+      this.http.post('http://localhost:3000/api/reservas', reserva).subscribe(
+        (response: any) => {
+          alert('Reserva realizada con éxito');
+          this.habitacion.disponibilidad--; // Actualiza disponibilidad localmente
+        },
+        (error) => {
+          alert(`Error al realizar la reserva: ${error.error.message || 'Error desconocido'}`);
+          console.error('Detalle del error:', error);
+        }
+      );
     } else {
-      console.log('No hay disponibilidad para reservar esta habitación');
+      alert('No hay disponibilidad para reservar esta habitación');
     }
   }
+  
 
   volverAlCatalogo() {
-    this.router.navigate(['/catalogo']); // Redirige al catálogo
+    this.router.navigate(['/catalogo']);
   }
 }
