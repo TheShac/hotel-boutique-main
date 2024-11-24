@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'carrito', component: CarritoComprasComponent, canActivate: [AuthGuard], data: { expectedRoles: 'client'} },
 
   // Vista de empleado
-  { path: 'empleado', component: EmpleadoComponent, canActivate: [AuthGuard], data: { expectedRoles: ['empleado', 'admin']} },
+  { path: 'empleado', component: EmpleadoComponent, data: { expectedRoles: ['empleado', 'admin']} },
 
   // Vistas que pueden entrar solo los rol: admin
   { path: 'admin', component: AdministradorComponent, canActivate: [AuthGuard], data: { expectedRoles: 'admin'} },

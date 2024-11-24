@@ -10,7 +10,8 @@ interface Reserva {
   cliente: { nombre: string; apellido: string };
   fecha: string;
   servicios: Servicio[];
-  total: number;
+  total: number; // Costo de la reserva base
+  estado: 'pendiente' | 'confirmada' | 'cancelada';
 }
 
 @Component({
@@ -28,7 +29,8 @@ export class EmpleadoComponent {
         { nombre: 'Desayuno', precio: 20 },
         { nombre: 'Spa', precio: 50 },
       ],
-      total: 300
+      total: 300,
+      estado: 'pendiente'
     },
     {
       habitacion: { nombre: 'Habitación Doble' },
@@ -38,22 +40,42 @@ export class EmpleadoComponent {
         { nombre: 'Piscina', precio: 15 },
         { nombre: 'Tour guiado', precio: 30 },
       ],
-      total: 200
+      total: 200,
+      estado: 'confirmada'
     }
   ];
 
+  filtroEstado: string = '';
+
+  get reservasFiltradas(): Reserva[] {
+    if (!this.filtroEstado) {
+      return this.reservas;
+    }
+    return this.reservas.filter(reserva => reserva.estado === this.filtroEstado);
+  }
+
   eliminarReserva(reserva: Reserva) {
-    console.log('Eliminar reserva:', reserva);
-    // Aquí se implementará la lógica de eliminar la reserva
+    if (confirm(`¿Estás seguro de eliminar la reserva de ${reserva.cliente.nombre}?`)) {
+      this.reservas = this.reservas.filter(r => r !== reserva);
+    }
   }
 
   editarReserva(reserva: Reserva) {
     console.log('Editar reserva:', reserva);
-    // Aquí se implementará la lógica para editar la reserva (quitar servicios)
+    // Lógica para editar la reserva
   }
 
   eliminarServicio(reserva: Reserva, servicio: Servicio) {
-    console.log('Eliminar servicio:', servicio, 'de la reserva:', reserva);
-    // Aquí se implementará la lógica para eliminar el servicio de la reserva
+    if (confirm(`¿Estás seguro de eliminar el servicio ${servicio.nombre}?`)) {
+      reserva.servicios = reserva.servicios.filter(s => s !== servicio);
+    }
+  }
+
+  calcularCostoServicios(reserva: Reserva): number {
+    return reserva.servicios.reduce((total, servicio) => total + servicio.precio, 0);
+  }
+
+  calcularTotal(reserva: Reserva): number {
+    return reserva.total + this.calcularCostoServicios(reserva);
   }
 }

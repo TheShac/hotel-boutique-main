@@ -1,39 +1,61 @@
 <div class="reservas-admin-container mt-4 mx-auto">
     <h2 class="text-center">Reservas de Clientes</h2>
-
-    <div *ngIf="reservas.length === 0" class="alert alert-info text-center">
-        No hay reservas para mostrar.
+  
+    <!-- Filtro por estado -->
+    <div class="mb-3">
+      <label for="estado" class="form-label">Filtrar por estado:</label>
+      <select id="estado" class="form-select" [(ngModel)]="filtroEstado">
+        <option value="">Todos</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="confirmada">Confirmada</option>
+        <option value="cancelada">Cancelada</option>
+      </select>
     </div>
-
-    <div *ngIf="reservas.length > 0">
-        <div *ngFor="let reserva of reservas" class="card mb-3">
-            <div class="card-body">
-                <div class="row">
-                    <!-- Imagen de la habitación -->
-                    <div class="col-md-4">
-                        <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="Habitación">
-                    </div>
-                    <!-- Detalles de la reserva -->
-                    <div class="col-md-8">
-                        <h5 class="card-title">{{ reserva.habitacion.nombre }}</h5>
-                        <p class="card-text"><strong>Cliente:</strong> {{ reserva.cliente.nombre }} {{ reserva.cliente.apellido }}</p>
-                        <p class="card-text"><strong>Fecha de reserva:</strong> {{ reserva.fecha }}</p>
-                        <p class="card-text"><strong>Servicios adicionales:</strong></p>
-                        <ul>
-                            <li *ngFor="let servicio of reserva.servicios">
-                                {{ servicio.nombre }} - {{ servicio.precio | currency }}
-                                <button class="btn btn-link btn-sm text-danger" (click)="eliminarServicio(reserva, servicio)">Quitar</button>
-                            </li>
-                        </ul>
-                        <p><strong>Total:</strong> {{ reserva.total | currency }}</p>
-                        <!-- Botones de acción -->
-                        <div class="mt-3">
-                            <button class="btn btn-danger me-2" (click)="eliminarReserva(reserva)">Eliminar Reserva</button>
-                            <button class="btn btn-primary" (click)="editarReserva(reserva)">Editar Reserva</button>
-                        </div>
-                    </div>
-                </div>
+  
+    <div *ngIf="reservasFiltradas.length === 0" class="alert alert-info text-center">
+      No hay reservas para mostrar.
+    </div>
+  
+    <div *ngIf="reservasFiltradas.length > 0">
+      <div *ngFor="let reserva of reservasFiltradas" class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <!-- Imagen de la habitación -->
+            <div class="col-md-4">
+              <img src="https://via.placeholder.com/150" class="img-fluid rounded" alt="Habitación">
             </div>
+            <!-- Detalles de la reserva -->
+            <div class="col-md-8">
+              <h5 class="card-title">{{ reserva.habitacion.nombre }}</h5>
+              <p class="card-text">
+                <strong>Cliente:</strong> {{ reserva.cliente.nombre }} {{ reserva.cliente.apellido }}
+              </p>
+              <p class="card-text"><strong>Fecha de reserva:</strong> {{ reserva.fecha }}</p>
+              <p class="card-text"><strong>Estado:</strong> {{ reserva.estado }}</p>
+              <p class="card-text"><strong>Servicios adicionales:</strong></p>
+              <ul>
+                <li *ngFor="let servicio of reserva.servicios">
+                  {{ servicio.nombre }} - {{ servicio.precio | currency }}
+                  <button
+                    class="btn btn-link btn-sm text-danger"
+                    (click)="eliminarServicio(reserva, servicio)"
+                  >
+                    Quitar
+                  </button>
+                </li>
+              </ul>
+              <p><strong>Costo de Servicios:</strong> {{ calcularCostoServicios(reserva) | currency }}</p>
+              <p><strong>Costo de Reserva:</strong> {{ reserva.total | currency }}</p>
+              <p><strong>Total:</strong> {{ calcularTotal(reserva) | currency }}</p>
+              <!-- Botones de acción -->
+              <div class="mt-3">
+                <button class="btn btn-danger me-2" (click)="eliminarReserva(reserva)">Eliminar Reserva</button>
+                <button class="btn btn-primary" (click)="editarReserva(reserva)">Editar Reserva</button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+  
