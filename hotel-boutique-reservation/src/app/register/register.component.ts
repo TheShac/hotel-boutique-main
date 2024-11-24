@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,11 @@ export class RegisterComponent {
   password: string = '';
   role: string = 'client'; // Por defecto, rol 'client'
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ){ }
 
   register() {
     this.authService.register(this.nombre, this.apellido, this.email, this.password, this.role).subscribe(

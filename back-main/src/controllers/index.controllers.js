@@ -1,4 +1,4 @@
-import { pool } from '../db.js';
+import {pool} from '../db.js';
 
 
 export const ping = async (req,res) => {
@@ -38,29 +38,37 @@ export const login = async (req, res) => {
 
 // Controlador para registrar
 export const registerUser = async (req, res) => {
-
-  try {
-    console.log(req.body)
-    const { nombre, apellido, email, password, rol } = req.body;
-
-    const userRole = rol || 'client';
+    const { email, password } = req.body;
+    const rol = req.body.rol || 'client';
   
-    const [rows] = await pool.query('INSERT INTO user (nombre, apellido, email, password, rol) VALUES (?, ?, ?, ?, ?)',[nombre, apellido, email, password, userRole]);
-    res.send({
-      rows
-    })
-  } catch (error) {
-    res.status(500).json({ message: 'Error en el servidor' });
-    
-  }
+    // Verificar que todos los datos requeridos estén presentes
+    if (!email || !password || !['admin', 'client'].includes(rol)){
+      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+    }
+  
+    // Encriptar la contraseña antes de guardarla
+    const hashedPassword = await bcrypt.hash(password, 10);
+  
+    try {
+      const [result] = await pool.query(
+        'INSERT INTO usuario (username, password, rol) VALUES (?, ?, ?)',
+        [email, hashedPassword, rol]
+      );
+      res.status(201).json({ message: 'Usuario registrado con éxito', userId: result.insertId });
+    } 
+    catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error al registrar el usuario' });
+    }
+  };
 
-};
+
 
 export const ver = async (req, res) => {
    
     try {
       const [result] = await pool.query(
-        'select * from user'
+        'select * from usuario'
       );
       res.status(201).json({ result });
     } 
@@ -68,33 +76,4 @@ export const ver = async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Error al registrar el usuario' });
     }
-};
-
-export const usuario = async(req, res) => {
-
-  const id = req.session.userId;
-
-  try {
-    const [rows] = await pool.query('SELECT * FROM user WHERE id = ?', [id]);
-    
-    if (rows.length > 0) {
-      const user = rows[0];
-      res.status(200).json({
-        success: true,
-        user: {
-          id: user.id,
-          nombre: user.nombre,
-          apellido: user.apellido,
-          email: user.email
-        }
-      });
-    } 
-    else {
-      res.status(404).json({ success: false, message: 'Usuario no encontrado' });
-    }
-  }
-  catch (error) {
-    console.error('Error al obtener datos del usuario:', error);
-    res.status(500).json({ success: false, message: 'Error en el servidor' });
-  }
-};
+  };

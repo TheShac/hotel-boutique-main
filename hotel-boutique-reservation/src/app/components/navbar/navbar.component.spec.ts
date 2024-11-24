@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'; // Importa las herramientas necesarias para realizar pruebas en Angular.
+import { NavbarComponent } from './navbar.component'; // Importa el componente Navbar que se va a probar.
 
-import { NavbarComponent } from './navbar.component';
+describe('NavbarComponent', () => { // Describe un conjunto de pruebas para el NavbarComponent.
+  let component: NavbarComponent; // Declara la variable que contendrá la instancia del componente.
+  let fixture: ComponentFixture<NavbarComponent>; // Declara la variable que contendrá el fixture de pruebas.
 
-describe('NavbarComponent', () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
-
-  beforeEach(async () => {
+  beforeEach(async () => { // Configura el entorno de prueba antes de cada prueba.
     await TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ]
+      declarations: [ NavbarComponent ] // Declara el componente que se va a probar.
     })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(NavbarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    .compileComponents(); // Compila los componentes declarados.
+  
+    fixture = TestBed.createComponent(NavbarComponent); // Crea una instancia del componente para pruebas.
+    component = fixture.componentInstance; // Obtiene la instancia del componente.
+    fixture.detectChanges(); // Detecta los cambios iniciales en la vista del componente.
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', () => { // Define una prueba individual.
+    expect(component).toBeTruthy(); // Verifica que la instancia del componente se haya creado correctamente.
   });
 });

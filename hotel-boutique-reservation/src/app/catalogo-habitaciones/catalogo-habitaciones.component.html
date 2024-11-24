@@ -1,23 +1,37 @@
-<div class="container">
-  <h2 class="text-center">Catálogo de Habitaciones</h2>
-  <div class="carousel-container">
-      <button class="arrow left-arrow" (click)="desplazarIzquierda()">&#10094;</button>
-      <div class="scroll-container" [style.transform]="'translateX(-' + desplazamiento + 'px)'">
-          <div class="card-container" *ngFor="let habitacion of habitaciones">
-              <div class="card mb-4 shadow border-light" [routerLink]="['/habitacion', habitacion.id]">
-                  <img src="{{ habitacion.imagenUrl }}" class="card-img-top" alt="{{ habitacion.nombre }}" />
-                  <div class="card-body">
-                      <h5 class="card-title">{{ habitacion.nombre }}</h5>
-                      <p><strong>Precio:</strong> {{ habitacion.precio }}</p>
-                      <p><strong>Disponibilidad:</strong> {{ habitacion.Disponibilidad }}</p>
-                      <button class="btn btn-primary" (click)="agregarAlCarrito(habitacion)" [disabled]="habitacion.Disponibilidad <= 0">
-                          {{ habitacion.Disponibilidad > 0 ? 'Reservar' : 'No disponible' }}
-                      </button>
-                  </div>
-              </div>
+<div class="container py-5">
+    <!-- Título del catálogo -->
+    <h2 class="text-center mb-4">Catálogo de Habitaciones</h2>
+    
+    <!-- Contenedor de tarjetas organizado en filas de 4 columnas -->
+    <div class="row">
+      <!-- Genera una tarjeta para cada habitación, usando col-md-3 para mostrar 4 por fila en pantallas medianas y más grandes -->
+      <div class="col-12 col-md-6 col-lg-3 mb-4" *ngFor="let habitacion of habitaciones">
+        
+        <!-- Tarjeta de habitación con estilo mejorado -->
+        <div class="card h-100 shadow border-0 rounded" [routerLink]="['/habitacion', habitacion.id]">
+          
+          <!-- Imagen de la habitación -->
+          <img src="{{ habitacion.imagenUrl }}" class="card-img-top rounded-top" alt="{{ habitacion.nombre }}" />
+          
+          <!-- Cuerpo de la tarjeta con información de la habitación -->
+          <div class="card-body">
+            <!-- Nombre de la habitación -->
+            <h5 class="card-title text-primary">{{ habitacion.nombre }}</h5>
+            
+            <!-- Precio de la habitación, con formato en pesos chilenos -->
+            <p><strong>Precio:</strong> {{ habitacion.precio | currency:'CLP':'symbol':'1.0-0' }}</p>
+            
+            <!-- Disponibilidad de la habitación -->
+            <p><strong>Disponibilidad:</strong> {{ habitacion.disponibilidad }}</p>
+            
+            <!-- Botón de reserva -->
+            <button class="btn btn-success w-100" (click)="agregarAlCarrito(habitacion)" [disabled]="habitacion.disponibilidad <= 0">
+              {{ habitacion.disponibilidad > 0 ? 'Reservar' : 'No disponible' }}
+            </button>
           </div>
+        </div>
+        
       </div>
-      <button class="arrow right-arrow" (click)="desplazarDerecha()">&#10095;</button>
+    </div>
   </div>
-</div>
   
