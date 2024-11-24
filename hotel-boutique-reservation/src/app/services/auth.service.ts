@@ -6,12 +6,6 @@ import { Router } from '@angular/router';
 
 interface LoginResponse {
   success: boolean;
-  user?: {
-    rol: string;
-    nombre?: string;
-    apellido?: string;
-    email?: string;
-  };
 }
 
 @Injectable({
@@ -21,7 +15,12 @@ export class AuthService {
   private apiUrl = 'http://localhost:3000';
   private userRoleSubject = new BehaviorSubject<string | null>(null);
   
-
+ private user = {
+    rol: 'rol',
+    nombre: 'nombre',
+    apellido: 'apellido',
+    email: 'email',
+  };
   userRole$ = this.userRoleSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
@@ -33,15 +32,19 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/register`, { nombre, apellido, email, password, rol });
   }
 
-  login(email: string, password: string): Observable<{ success: boolean; user?: { rol: string } }> {
-    return this.http.post<{ success: boolean; user?: { rol: string } }>(`${this.apiUrl}/login`, { email, password }).pipe(
+  login(email: string, password: string): Observable<{ success: boolean; user?: { rol: string, nombre: string, apellido: string, email: string  } }> {
+    return this.http.post<{ success: boolean; user: { rol: string , nombre: string, apellido: string, email: string  } }>(`${this.apiUrl}/login`, { email, password }).pipe(
       tap(response => {
         if (response.success && response.user?.rol) {
-          this.setUserRole(response.user.rol);
-          
 
+          this.setUserRole(response.user.rol);          
+          this.setUsuario(response.user.nombre, response.user.apellido, response.user.email);
+          
           if(response.user.rol === 'admin'){
             this.router.navigate(['/admin']);
+          }
+          else if(response.user.rol === 'emps'){
+            this.router.navigate(['/home']);
           }
           else if(response.user.rol === 'client'){
             this.router.navigate(['/home']);
@@ -75,5 +78,23 @@ export class AuthService {
   
   logout() {
     this.setUserRole(null);
+  }
+
+  setUsuario(nombre: string, apellido: string, email: string){
+    localStorage.setItem(this.user.nombre , nombre);
+    localStorage.setItem(this.user.apellido , apellido);
+    localStorage.setItem(this.user.email , email);
+  }
+
+  getUsuario(){
+    const nombre = localStorage.getItem(this.user.nombre);
+    const apellido = localStorage.getItem(this.user.apellido);
+    const email = localStorage.getItem(this.user.email );
+
+    return {
+      nombre: nombre,
+      apellido: apellido,
+      email: email
+    }; 
   }
 }

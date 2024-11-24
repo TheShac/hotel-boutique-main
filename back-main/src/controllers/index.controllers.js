@@ -22,6 +22,8 @@ export const login = async (req, res) => {
         success: true,
         user: {
           id: user.id,
+          nombre: user.nombre,
+          apellido: user.apellido,
           email: user.email,
           rol: user.rol,
         }

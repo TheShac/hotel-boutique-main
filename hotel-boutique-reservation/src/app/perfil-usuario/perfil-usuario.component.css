@@ -1,0 +1,52 @@
+.perfil-container {
+    background-color: #f0f0f0; /* Gris claro */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+}
+
+.card-title {
+    color: #333;
+    font-weight: bold;
+}
+
+.email-edit {
+    display: flex;
+    align-items: center;
+}
+
+.email-edit input {
+    margin-right: 8px; /* Espacio entre el input y el botón */
+}
+
+.email-edit button {
+    font-size: 0.875rem; /* Tamaño de fuente más pequeño */
+    padding: 4px 10px; /* Reduce el tamaño del botón */
+}
+
+.reserva-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.reserva-card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.alert {
+    color: #555;
+    font-style: italic;
+}
+
+h4 {
+    color: #333;
+    margin-top: 20px;
+    font-weight: bold;
+}

@@ -49,11 +49,15 @@ export class LoginComponent {
       (response) => {
         if (response.success) {
           const rol = response.user?.rol;
+          const nombre = response.user?.nombre;
+          const apellido = response.user?.apellido;
+          const email = response.user?.email;
+
           switch (rol) {
             case 'admin':
               this.router.navigate(['/admin']);
               break;
-            case 'empleado':
+            case 'emps':
               this.router.navigate(['/perfil']);
               break;
             case 'client':
@@ -72,5 +76,6 @@ export class LoginComponent {
         alert('Error en el inicio de sesión. Verifica tus credenciales.');
       }
     );
+
   }
 }

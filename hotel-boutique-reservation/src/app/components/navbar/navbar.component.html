@@ -4,9 +4,9 @@
 
     <div class="nav-links">
       <a routerLink="/" routerLinkActive="active">Inicio</a>
-      <a routerLink="/catalogo" routerLinkActive="active">Habitaciones</a>
-      <a routerLink="/about" routerLinkActive="active">Acerca</a>
-
+      <a routerLink="/catalogo" routerLinkActive="active">Servicios</a>
+      
+      <a *ngIf="isEmp()" routerLink="/about" routerLinkActive="active">Configuracion Servicios</a>
       <a *ngIf="isAdmin()" routerLink="/admin" routerLinkActive="active">Administración</a>
       <a *ngIf="isClient()" routerLink="/carrito" routerLinkActive="active">Reservas</a>
       <a *ngIf="isClient()" routerLink="/perfil" routerLinkActive="active">Perfil</a>
