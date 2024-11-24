@@ -1,18 +1,151 @@
-.carousel-item img{
-    width: 70%;
-    height: 500px;
-    object-fit: cover;
-    margin: center;
+
+body {
+    background-color: #f7f7f7;
+    font-family: 'Arial', sans-serif;
+    color: #333;
 }
 
-.carousel-caption h5 {
-    font-size: 1.5rem;
+/* Estilo de la bienvenida */
+.container-fluid {
+    background-image: url('assets/l4.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+    padding: 40px; 
+}
+
+h1 {
+    font-size: 3rem;
     font-weight: bold;
 }
 
-.carousel-caption p {
-    font-size: 1rem;
-    margin-top: 0.5rem;
+p {
+    font-size: 1.5rem;
 }
+
+
+.card {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.card-img-top {
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+    height: 250px;
+}
+
+.card-body {
+    background-color: #fff;
+    border-radius: 0 0 10px 10px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ff6f61;
+}
+
+.card-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Efecto de nieve */
+@keyframes snowflakes {
+    0% {
+        top: -10%;
+        opacity: 1;
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+    }
+}
+
+.snowflakes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+}
+
+.snowflakes div {
+    position: absolute;
+    width: 20px; 
+    height: 20px; 
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.8; 
+    animation: snowflakes 8s linear infinite;
+}
+
+.snowflakes div:nth-child(odd) {
+    animation-duration: 8s;
+    animation-delay: 0s;
+}
+
+.snowflakes div:nth-child(even) {
+    animation-duration: 7s;
+    animation-delay: 1s;
+}
+/* Estilo general del cuerpo */
+body {
+    background-color: #f7f7f7;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    overflow: hidden;  
+}
+
+
+@keyframes shootingStar {
+    0% {
+        left: -10%;
+        top: 20%;
+        opacity: 1;
+        transform: rotate(45deg);
+    }
+    100% {
+        left: 100%;
+        top: 60%;
+        opacity: 0;
+        transform: rotate(45deg);
+    }
+}
+
+
+.star-falling {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    animation: shootingStar 2s linear infinite;
+    pointer-events: none;  
+}
+
+
+.star-falling:nth-child(2) {
+    animation-delay: 1s;
+}
+
+.star-falling:nth-child(3) {
+    animation-delay: 2s;
+}
+
+
+
+
+
+
 
 
