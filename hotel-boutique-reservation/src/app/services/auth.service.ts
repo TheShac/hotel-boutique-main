@@ -67,6 +67,11 @@ export class AuthService {
       localStorage.removeItem('userRole');
     }
   }
+  
+  getCurrentUser(): any {
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null;
+  }
 
   getRole(): string | null {
     return this.userRoleSubject.value; // Obtener el valor actual sincrónicamente

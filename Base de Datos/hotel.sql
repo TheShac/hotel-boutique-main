@@ -25,6 +25,7 @@ CREATE TABLE usuario
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   rol ENUM('client', 'admin') NOT NULL,
+  role ENUM('client', 'admin','empleado') NOT NULL,
   PRIMARY KEY (id),
   UNIQUE (email)
 );
@@ -44,3 +45,4 @@ select * from usuario;
 
 SELECT * FROM usuario WHERE email = 'admin@hotel.com' AND password = 'admin123';
 
+insert into usuario values(2, 'empleado@hotel.com', 'empleado123', 'empleado');
