@@ -1,31 +1,29 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  .content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .footer {
-    width: 100%;
-    background-color: #333;
-    color: #fff;
-    padding: 1rem;
-    text-align: center;
-  }
-  
-  .footer-links a {
-    margin: 0 0.5rem;
-    color: white;
-    text-decoration: none;
-  }
-  
-  .footer-links a:hover {
-    color: #007bff;
-  }
+  display: flex; /* Define un contenedor flexible para el componente raíz. */
+  flex-direction: column; /* Organiza los elementos en una columna. */
+  min-height: 100vh; /* Asegura que el componente ocupe al menos el 100% del alto de la ventana. */
+}
 
-  
+.content {
+  flex: 1; /* Permite que este contenedor crezca y ocupe el espacio disponible. */
+  display: flex; /* Define un contenedor flexible. */
+  flex-direction: column; /* Organiza los elementos hijos en una columna. */
+}
+
+.footer {
+  width: 100%; /* El pie de página ocupa todo el ancho disponible. */
+  background-color: #333; /* Fondo oscuro para el pie de página. */
+  color: #fff; /* Texto blanco para contraste. */
+  padding: 1rem; /* Espaciado interno para el contenido del pie de página. */
+  text-align: center; /* Centra el texto dentro del pie de página. */
+}
+
+.footer-links a {
+  margin: 0 0.5rem; /* Espaciado horizontal entre enlaces. */
+  color: white; /* Color blanco para los enlaces. */
+  text-decoration: none; /* Elimina el subrayado de los enlaces. */
+}
+
+.footer-links a:hover {
+  color: #007bff; /* Cambia el color a azul cuando se pasa el mouse sobre los enlaces. */
+}
