@@ -1,5 +1,5 @@
 import  {Router}  from 'express';
-import { ping, login, registerUser, ver, usuario, crearReserva } from '../controllers/index.controllers.js';
+import { ping, login, registerUser, ver, usuario, crearReserva, crearHabitacion } from '../controllers/index.controllers.js';
 import { isAuthenticated } from '../middlewares/authMiddleware.js';
 
 const router = Router();
@@ -12,5 +12,6 @@ router.post('/register', registerUser);
 router.get('/usuario/', isAuthenticated, usuario);
 
 router.post('/api/reservas', crearReserva);
+router.post('/habitacion', crearHabitacion)
 
 export default router;

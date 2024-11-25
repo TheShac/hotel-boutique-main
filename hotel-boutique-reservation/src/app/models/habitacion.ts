@@ -3,7 +3,7 @@ export interface Habitacion {
     nombre: string;
     descripcion: string;
     precio: number;
-    disponible: boolean;
+    disponible: number;
     imagen: string;
   }
   

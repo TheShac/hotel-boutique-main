@@ -47,7 +47,7 @@ export const registerUser = async (req, res) => {
 
     const userRole = rol || 'client';
   
-    const [rows] = await pool.query('INSERT INTO user (nombre, apellido, email, password, rol) VALUES (?, ?, ?, ?, ?)',[nombre, apellido, email, password, userRole]);
+    const [rows] = await pool.query('INSERT INTO user (nombre, apellido, email, password, rol) VALUES (?, ?, ?, ?, ?)', [nombre, apellido, email, password, userRole]);
     res.send({
       rows
     })
@@ -129,5 +129,21 @@ export const crearReserva = async (req, res) => {
   } catch (error) {
     console.error('Error al crear la reserva:', error);
     res.status(500).json({ message: 'Error al crear la reserva' });
+  }
+};
+
+export const crearHabitacion = async (req, res) => {
+
+  try {
+    const { nombre, descripcion, precio, disponibilidad, imagen} = req.body;
+    const disponible = disponibilidad || 5;
+    const [rows] = await pool.query('INSERT INTO habitaciones (nombre, descripcion, precio, disponibilidad, imagen) VALUES (?, ?, ?, ?, ?)', [nombre, descripcion, precio, disponible, imagen]);
+    
+    res.send({
+      rows
+    })
+  } 
+  catch (error) {
+    res.status(500).json({ message: 'Error en el servidor' });
   }
 };

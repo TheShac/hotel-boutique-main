@@ -13,7 +13,7 @@ export class ReservaService {
       nombre: 'Suite Deluxe',
       descripcion: 'Habitación de lujo con vista al mar',
       precio: 200,
-      disponible: true,
+      disponible: 5,
       imagen: '',
     },
     {
@@ -21,7 +21,7 @@ export class ReservaService {
       nombre: 'Habitación Estándar',
       descripcion: 'Habitación cómoda y económica',
       precio: 100,
-      disponible: true,
+      disponible: 5,
       imagen: '',
     },
     {
@@ -29,7 +29,7 @@ export class ReservaService {
       nombre: 'Habitación Grande',
       descripcion: 'Habitación Muy Grande',
       precio: 100,
-      disponible: true,
+      disponible: 5,
       imagen: '',
     },
     // Puedes agregar más habitaciones aquí...
@@ -45,7 +45,7 @@ export class ReservaService {
     const habitacion = this.habitaciones.find(h => h.id === habitacionId);
     if (habitacion && habitacion.disponible) {
       // Marca la habitación como no disponible después de la reserva
-      habitacion.disponible = false;
+      habitacion.disponible = 5;
       return of(true); // La reserva fue exitosa
     }
     return of(false); // La habitación ya estaba reservada

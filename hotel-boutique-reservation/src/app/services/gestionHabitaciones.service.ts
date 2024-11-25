@@ -1,18 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Habitacion } from '../models/habitacion';
 import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GestionHabitacionesService {
+
+  private apiUrl = 'http://localhost:3000';
+
   actualizarHabitacion(resultado: any) {
     throw new Error('Method not implemented.');
   }
   private readonly STORAGE_KEY = 'habitaciones';
   private habitaciones: Habitacion[] = [];
 
-  constructor() {
+  private habitacion = {
+    nombre: '',
+    descripcion: '',
+    precio: 0,
+    disponible: 0,
+    imagen: ''
+  }
+
+  constructor(private http: HttpClient) {
     this.habitaciones = this.cargarHabitaciones();
   }
 
@@ -26,7 +38,7 @@ export class GestionHabitacionesService {
             nombre: 'Suite Deluxe',
             descripcion: 'Habitación de lujo con vista al mar',
             precio: 200,
-            disponible: true,
+            disponible: 5,
             imagen:
               'https://static.abc.es/Media/201504/27/hotel12--644x362.jpg',
           },
@@ -35,7 +47,7 @@ export class GestionHabitacionesService {
             nombre: 'Habitación Estándar',
             descripcion: 'Habitación cómoda y económica',
             precio: 100,
-            disponible: true,
+            disponible: 5,
             imagen:
               'https://www.sillasmesas.es/blog/wp-content/uploads/2020/02/Decoracion-de-habitaciones-en-hoteles.jpg',
           },
@@ -44,7 +56,7 @@ export class GestionHabitacionesService {
             nombre: 'Habitación Grande',
             descripcion: 'Habitación Muy Grande',
             precio: 150,
-            disponible: true,
+            disponible: 5,
             imagen:
               'https://hips.hearstapps.com/hmg-prod/images/habitacion-hotel-revolve2-1546271048.jpeg?resize=640:*',
           },
@@ -59,12 +71,14 @@ export class GestionHabitacionesService {
     return of(this.habitaciones);
   }
 
-  eliminarHabitacion(id: number): void {
+  eliminarHabitacion(id: number): Observable<void> {
     this.habitaciones = this.habitaciones.filter((h) => h.id !== id);
     this.guardarHabitaciones(); // Guarda el estado actualizado en localStorage
+
+    return of(void 0);
   }
 
-  guardarHabitacion(habitacion: Habitacion): void {
+  guardarHabitacion(habitacion: Habitacion): Observable<Habitacion> {
     habitacion.id =
       this.habitaciones.length > 0
         ? Math.max(...this.habitaciones.map((h) => h.id)) + 1
@@ -75,5 +89,8 @@ export class GestionHabitacionesService {
 
     // Guardar los cambios en localStorage
     this.guardarHabitaciones();
+    return of(habitacion);
   }
+
+  
 }

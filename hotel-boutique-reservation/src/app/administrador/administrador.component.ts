@@ -1,155 +1,137 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Habitacion } from '../models/habitacion';
 import { GestionHabitacionesService } from '../services/gestionHabitaciones.service';
-import { MatDialog } from '@angular/material/dialog'; // Importar MatDialog para manejar diálogos
-import { EditarHabitacionComponent } from '../editar-habitacion/editar-habitacion.component'; // Importar el componente para editar habitaciones
-import Swal from 'sweetalert2'; // Importar SweetAlert2 para mostrar alertas
-import { trigger, state, style, transition, animate } from '@angular/animations'; // Importar animaciones de Angular
-
+import { Habitacion } from '../models/habitacion';
+import { MatDialog } from '@angular/material/dialog';
+import { EditarHabitacionComponent } from '../editar-habitacion/editar-habitacion.component';
+import Swal from 'sweetalert2';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
-  selector: 'app-administrador', // Selector para el componente
-  templateUrl: './administrador.component.html', // URL de la plantilla HTML
-  styleUrls: ['./administrador.component.css'], // URL de los estilos CSS
-  encapsulation: ViewEncapsulation.ShadowDom, // Usar encapsulación Shadow DOM para estilos
+  selector: 'app-administrador',
+  templateUrl: './administrador.component.html',
+  styleUrls: ['./administrador.component.css'],
+  encapsulation: ViewEncapsulation.ShadowDom,
   animations: [
-    // Definición de animaciones para el componente
     trigger('fadeIn', [
       transition(':enter', [
-        style({ opacity: 0 }), // Estilo inicial con opacidad 0
-        animate('500ms ease-in', style({ opacity: 1 })), // Animación de entrada
+        style({ opacity: 0 }),
+        animate('500ms ease-in', style({ opacity: 1 })),
       ]),
     ]),
   ],
 })
 export class AdministradorComponent implements OnInit {
-  mostrarDiv = true; // Controla la visibilidad de la sección de gestión de habitaciones
+  mostrarDiv = true;
 
-  // Método para formatear el cache y recargar la página
   formatear() {
     localStorage.clear(); // Limpiar el almacenamiento local
     window.location.reload(); // Recargar la página
   }
 
-  // Objeto para almacenar los datos de la habitación
-  habitacion: Habitacion = {
-    id: 0,
-    nombre: '',
-    descripcion: '',
-    precio: 0,
-    disponible: true,
-    imagen: '',
-  };
+  // Propiedades de la habitación declaradas individualmente
+  nombre: string = '';
+  descripcion: string = '';
+  precio: number = 0;
+  disponible: number = 5; // Valor inicial de disponibilidad
+  imagen: string = '';
 
-  habitaciones: Habitacion[] = []; // Array para almacenar la lista de habitaciones
-  isLoaded = false; // Bandera para verificar si los datos han sido cargados
+  habitaciones: any[] = []; // Arreglo para almacenar las habitaciones cargadas desde el backend
 
   constructor(
-    private gestionHabitacionesService: GestionHabitacionesService, // Servicio para gestionar habitaciones
-    private dialog: MatDialog // Servicio para manejar diálogos
+    private gestionHabitacionesService: GestionHabitacionesService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    // Método de ciclo de vida que se llama al inicializar el componente
-    this.cargarHabitaciones(); // Cargar las habitaciones al inicializar
+    this.cargarHabitaciones(); // Cargar las habitaciones al iniciar el componente
   }
 
-  // Método para cargar las habitaciones desde el servicio
   cargarHabitaciones(): void {
     this.gestionHabitacionesService.getHabitaciones().subscribe((data) => {
-      this.habitaciones = data; // Asignar los datos recibidos al array de habitaciones
+      this.habitaciones = data; // Asigna las habitaciones obtenidas al arreglo
     });
   }
 
-  // Método para guardar una nueva habitación
-  async guardarHabitacion() {
-    // Verificar si hay espacio para más habitaciones
-    if (this.habitaciones.length < 20) {
-      // Validar que todos los campos estén completos
-      if (
-        this.habitacion.nombre == '' ||
-        this.habitacion.precio == 0 ||
-        this.habitacion.descripcion == '' ||
-        this.habitacion.imagen == ''
-      ) {
-        // Mostrar alerta si hay campos incompletos
-        Swal.fire({
-          title: 'Campos incompletos',
-          text: 'Por favor completa todos los campos antes de guardar.',
-          icon: 'warning',
-          confirmButtonText: 'Entendido',
-        });
-      } else if (!(await this.verificarImagen(this.habitacion.imagen))) {
-        // Verificar que la imagen se haya cargado correctamente
-        Swal.fire({
-          title: 'Error al cargar la imagen',
-          text: 'La imagen no se ha cargado correctamente. Por favor, intenta de nuevo.',
-          icon: 'error',
-          confirmButtonText: 'Entendido',
-        });
-      } else if (this.habitacion.precio < 0) {
-        // Verificar que el precio no sea negativo
-        Swal.fire({
-          title: 'Precio negativo',
-          text: 'El precio de la habitación no puede ser negativo.',
-          icon: 'error',
-          confirmButtonText: 'Entendido',
-        });
-      } else {
-        console.log(this.habitacion); // Imprimir los datos de la habitación en consola
-        this.gestionHabitacionesService.guardarHabitacion(this.habitacion); // Guardar la habitación utilizando el servicio
-        // Mostrar alerta de éxito
-        Swal.fire({
-          title: 'Habitación guardada',
-          text: 'La habitación se ha guardado correctamente.',
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
-        });
-      }
-    } else {
-      // Mostrar alerta si se han alcanzado el máximo de habitaciones
+  guardarHabitacion() {
+    // Validación de campos
+    if (!this.nombre || this.precio <= 0 || !this.descripcion) {
       Swal.fire({
-        title: 'Todas las habitaciones ocupadas',
-        text: 'No puedes agregar más habitaciones.',
+        title: 'Campos incompletos',
+        text: 'Por favor completa todos los campos antes de guardar.',
         icon: 'warning',
         confirmButtonText: 'Entendido',
       });
+    } 
+    else if (!(this.verificarImagen(this.imagen))) {
+      // Verificar que la imagen se haya cargado correctamente
+      Swal.fire({
+        title: 'Error al cargar la imagen',
+        text: 'La imagen no se ha cargado correctamente. Por favor, intenta de nuevo.',
+        icon: 'error',
+        confirmButtonText: 'Entendido',
+      });
+    }
+    else {
+      // Creación de un objeto para enviar al servicio
+      const nuevaHabitacion = {
+        id: 0,
+        nombre: this.nombre,
+        descripcion: this.descripcion,
+        precio: this.precio,
+        disponible: this.disponible,
+        imagen: this.imagen,
+      };
+
+      // Guardar la nueva habitación usando el servicio
+      this.gestionHabitacionesService.guardarHabitacion(nuevaHabitacion).subscribe(
+        (response) => {
+          Swal.fire({
+            title: 'Habitación guardada',
+            text: 'La habitación se ha guardado correctamente.',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+          });
+          this.cargarHabitaciones(); // Actualizar la lista de habitaciones
+          this.resetFormulario(); // Restablecer los valores del formulario
+        }
+      );
     }
   }
 
-  // Método para eliminar una habitación
   eliminarHabitacion(id: number): void {
-    // Mostrar alerta de confirmación
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'Esta acción no se puede deshacer.',
       icon: 'warning',
-      showCancelButton: true, // Mostrar botón de cancelar
+      showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Sí, eliminar!',
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log(id); // Imprimir el ID de la habitación a eliminar
-        this.gestionHabitacionesService.eliminarHabitacion(id); // Llamar al servicio para eliminar la habitación
-        this.cargarHabitaciones(); // Recargar la lista de habitaciones
-        // Mostrar alerta de éxito
-        Swal.fire({
-          title: 'Eliminado!',
-          text: 'La habitación ha sido eliminada.',
-          icon: 'success',
-          confirmButtonText: 'Entendido',
-          willClose: () => {
-            window.location.reload(); // Recargar la página después de cerrar la alerta
-          },
+        this.gestionHabitacionesService.eliminarHabitacion(id).subscribe(() => {
+          Swal.fire({
+            title: 'Eliminado!',
+            text: 'La habitación ha sido eliminada.',
+            icon: 'success',
+            confirmButtonText: 'Entendido',
+          });
+          this.cargarHabitaciones(); // Actualizar la lista de habitaciones después de eliminar
         });
       }
     });
-    this.cargarHabitaciones(); // Recargar la lista de habitaciones después de la acción
   }
 
-  // Método para verificar si una imagen se carga correctamente
+  resetFormulario(): void {
+    // Restablecer cada propiedad a su valor inicial
+    this.nombre = '';
+    this.descripcion = '';
+    this.precio = 0;
+    this.disponible = 5; // Valor predeterminado de disponibilidad
+    this.imagen = '';
+  }
+
   verificarImagen(url: string) {
     return new Promise((resolve, reject) => {
       const img = new Image(); // Crear un nuevo objeto de imagen
@@ -161,11 +143,13 @@ export class AdministradorComponent implements OnInit {
     });
   }
 
-  // Método para abrir el diálogo de edición de habitación
   abrirDialogo(habitacion: Habitacion): void {
     //this.mostrarDiv = false; 
     const dialogRef = this.dialog.open(EditarHabitacionComponent, {
       data: habitacion, // Pasar la habitación a editar al diálogo
+      width: '80%',  // Ajusta el tamaño según sea necesario
+      height: 'auto', // Ajusta la altura según el contenido
+      panelClass: 'custom-dialog'  // Aplica la clase personalizada al abrir el diálogo
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
