@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../services/auth.service';
+import { Component, OnInit } from '@angular/core'; // Decorador y ciclo de vida principal de Angular.
+import { ActivatedRoute, Router } from '@angular/router'; // Herramientas para navegación y parámetros de ruta.
+import { HttpClient } from '@angular/common/http'; // Servicio para realizar solicitudes HTTP.
+import { AuthService } from '../services/auth.service'; // Servicio de autenticación.
 
 @Component({
-  selector: 'app-habitacion-detalle',
-  templateUrl: './habitacion-detalle.component.html',
-  styleUrls: ['./habitacion-detalle.component.css'],
+  selector: 'app-habitacion-detalle', // Selector del componente.
+  templateUrl: './habitacion-detalle.component.html', // Ruta de la plantilla HTML asociada.
+  styleUrls: ['./habitacion-detalle.component.css'], // Ruta del archivo CSS asociado.
 })
 export class HabitacionDetalleComponent implements OnInit {
-  habitacion: any;
-  userId: number | null = null; // Almacena el ID del usuario autenticado
+  habitacion: any; // Objeto que almacena los detalles de la habitación seleccionada.
+  userId: number | null = null; // ID del usuario autenticado (inicialmente `null`).
 
+  // Lista de habitaciones con datos predefinidos.
   habitaciones = [
+    // Ejemplo de habitaciones con detalles (id, nombre, descripción, precio, disponibilidad, imagen, fotos adicionales).
     {
       id: 1,
       nombre: 'Habitación Estandar',
@@ -139,6 +141,7 @@ export class HabitacionDetalleComponent implements OnInit {
     }
   ];
 
+  // Constructor que inyecta servicios necesarios.
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -146,6 +149,7 @@ export class HabitacionDetalleComponent implements OnInit {
     private authService: AuthService // Inyecta AuthService
   ) {}
 
+  // Método del ciclo de vida que se ejecuta al inicializar el componente.
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.habitacion = this.habitaciones.find((h) => h.id === id);
@@ -154,6 +158,7 @@ export class HabitacionDetalleComponent implements OnInit {
       console.error('Habitación no encontrada');
     }
   }
+  // Método para reservar una habitación.
   reservarHabitacion() {
     if (this.habitacion && this.habitacion.disponibilidad > 0) {
       const user = this.authService.getCurrentUser(); // Obtén el usuario autenticado
@@ -162,6 +167,7 @@ export class HabitacionDetalleComponent implements OnInit {
         habitacion_id: this.habitacion.id,
       };
   
+      // Envío de la reserva al servidor mediante una solicitud POST.
       this.http.post('http://localhost:3000/api/reservas', reserva).subscribe(
         (response: any) => {
           alert('Reserva realizada con éxito');
@@ -177,7 +183,7 @@ export class HabitacionDetalleComponent implements OnInit {
     }
   }
   
-
+// Método para volver al catálogo de habitaciones.
   volverAlCatalogo() {
     this.router.navigate(['/catalogo']);
   }
