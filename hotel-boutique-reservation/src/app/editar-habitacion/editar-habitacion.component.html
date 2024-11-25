@@ -1,9 +1,12 @@
 <h2>Editar Habitación</h2>
+<!-- Formulario para editar los detalles de una habitación -->
 <form>
+  <!-- Campo para editar el nombre de la habitación -->
   <mat-form-field>
     <mat-label>Nombre</mat-label>
     <input matInput [(ngModel)]="habitacion.nombre" name="nombre" required />
   </mat-form-field>
+  <!-- Campo para editar la descripción de la habitación -->
   <mat-form-field>
     <mat-label>Descripción</mat-label>
     <textarea
@@ -13,6 +16,7 @@
       required
     ></textarea>
   </mat-form-field>
+  <!-- Campo para editar el precio de la habitación -->
   <mat-form-field>
     <mat-label>Precio</mat-label>
     <input
@@ -23,9 +27,11 @@
       required
     />
   </mat-form-field>
+  <!-- Campo para editar la URL de la imagen de la habitación -->
   <mat-form-field>
     <mat-label>Imagen URL</mat-label>
     <input matInput [(ngModel)]="habitacion.imagen" name="imagen" required />
   </mat-form-field>
+  <!-- Botón para guardar los cambios realizados -->
   <button mat-raised-button color="primary" (click)="guardar()">Guardar</button>
 </form>
