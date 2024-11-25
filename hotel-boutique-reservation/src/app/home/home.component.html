@@ -9,6 +9,10 @@
   <title>Hotel Boutique - Navidad</title>
 </head>
 <body>
+  <div class="snowflakes-container">
+    <div class="snowflakes"></div>
+  </div>
+  
   <!-- Estrella fugaz -->
 <div class="star-falling"></div>
 
@@ -17,7 +21,7 @@
 <div class="container-fluid p-5 text-white text-center">
   <h1 class="display-4">¡Feliz Navidad!</h1>
   <p class="lead">Bienvenido al Hotel Boutique. El refugio del viajero estas fiestas.</p>
-  <a href="#ofertas" class="btn btn-light btn-lg">Ver Ofertas</a>
+  
 </div>
 
 <!-- Sección de ofertas especiales -->
@@ -33,7 +37,8 @@
         <div class="card-body">
           <h5 class="card-title">Paquete Navidad</h5>
           <p class="card-text">Estancia con decoración navideña, cena especial y más.</p>
-          <a href="#" class="btn btn-outline-primary">Más Información</a>
+          <a [routerLink]="['/habitacion', 1]" class="btn btn-outline-primary">Más Información</a>
+
         </div>
       </div>
     </div>
@@ -43,7 +48,7 @@
         <div class="card-body">
           <h5 class="card-title">Escapada de Año Nuevo</h5>
           <p class="card-text">Disfruta de un fin de año único en un entorno cálido y festivo.</p>
-          <a href="#" class="btn btn-outline-primary">Más Información</a>
+          <a [routerLink]="['/habitacion', 2]" class="btn btn-outline-primary">Más Información</a>
         </div>
       </div>
     </div>
@@ -64,9 +69,7 @@
 
 
 <div class="container text-center mt-5 mb-5">
-  <p>Síguenos para más sorpresas navideñas:</p>
-  <a href="#" class="btn btn-outline-secondary m-2">Facebook</a>
-  <a href="#" class="btn btn-outline-secondary m-2">Instagram</a>
+  
 </div>
 
 </body>
