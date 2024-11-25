@@ -1,0 +1,164 @@
+/* Contenedor principal de la tarjeta */
+.card-container {
+    margin: 50px auto;
+    max-width: 400px;
+    position: relative;
+    perspective: 1000px;
+}
+
+/* Contenedor que incluye ambas caras de la tarjeta */
+.card {
+    width: 100%;
+    height: 220px;
+    border-radius: 15px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+/* Clase para girar la tarjeta */
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Estilo para ambas caras de la tarjeta */
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Cara frontal */
+
+.card-front {
+    background-image: url('/assets/img/bg-tarjeta/bg-tarjeta-02.jpg'); /* Ruta relativa corregida */
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-back {
+    background-image: url('/assets/img/bg-tarjeta/bg-tarjeta-02.jpg'); /* Ruta relativa corregida */
+    background-size: cover;
+    background-position: center;
+    transform: rotateY(180deg);
+    padding: 20px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+/* Información de la tarjeta */
+.card-number,
+.card-name,
+.card-expiry {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Banda negra en la parte trasera */
+.card-back .banda-negra {
+    width: 100%;
+    height: 40px;
+    background-color: #000;
+    margin-bottom: 20px;
+}
+
+/* Firma y CCV */
+.card-back .firma {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-back .firma-line {
+    background-color: #fff;
+    height: 20px;
+    flex: 1;
+    margin-right: 10px;
+}
+
+.card-back .ccv {
+    font-size: 1em;
+    font-weight: bold;
+    padding: 5px 10px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 5px;
+}
+
+/* Contenedor del formulario */
+.formulario-container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Inputs del formulario */
+.formulario-container input,
+.formulario-container select,
+.formulario-container button {
+    width: calc(100% - 20px);
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Botón */
+.formulario-container button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.formulario-container button:hover {
+    background-color: #0056b3;
+}
+
+
+/* Contenedor para el chip */
+.chip-container {
+    position: absolute;
+    top: 20px;
+    right: 20px; /* Cambiado de left a right */
+  }
+  
+  /* Imagen del chip */
+  .chip-image {
+    width: 50px;
+    height: auto;
+  }
+
+  /* Texto de expiración */
+.card-expiry-label {
+    font-size: 0.9em;
+    color: #fff;
+    text-transform: uppercase;
+    margin-top: 10px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+
+  .card-expiry {
+    font-size: 1em;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }

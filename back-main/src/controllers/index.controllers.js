@@ -12,7 +12,6 @@ export const login = async (req, res) => {
 
   try {
     const [rows] = await pool.query('SELECT * FROM user WHERE LOWER(email) = LOWER(?) AND password = ?', [email, password]);
-    //console.log('Resultado de la consulta:', rows);
 
     if (rows.length > 0) {
       const user = rows[0];
@@ -102,17 +101,19 @@ export const usuario = async(req, res) => {
 };
 
 export const crearReserva = async (req, res) => {
-  const { usuario_id, habitacion_id } = req.body;
+  // Extraer datos del cuerpo de la solicitud
+  const { usuario_id, habitacion_id, servicios_adicionales } = req.body;
 
+  // Verificar que los datos requeridos están presentes
   if (!usuario_id || !habitacion_id) {
     return res.status(400).json({ message: 'Datos faltantes para la reserva' });
   }
 
   try {
-    // Insertar reserva
+    // Insertar la reserva en la base de datos
     const [result] = await pool.query(
-      'INSERT INTO reservas (usuario_id, habitacion_id) VALUES (?, ?)',
-      [usuario_id, habitacion_id]
+      'INSERT INTO reservas (usuario_id, habitacion_id, servicios_adicionales) VALUES (?, ?, ?)',
+      [usuario_id, habitacion_id, JSON.stringify(servicios_adicionales || [])] // Guardar servicios como JSON
     );
 
     // Actualizar disponibilidad de la habitación
@@ -121,15 +122,35 @@ export const crearReserva = async (req, res) => {
       [habitacion_id]
     );
 
+    // Validar si la disponibilidad fue actualizada correctamente
     if (updateResult.affectedRows === 0) {
-      return res.status(400).json({ message: 'No hay disponibilidad para esta habitación' });
+      // Obtener la disponibilidad actual de la habitación
+      const [habitacion] = await pool.query('SELECT disponibilidad FROM habitaciones WHERE id = ?', [habitacion_id]);
+      const disponibilidad_actual = habitacion[0]?.disponibilidad || 0;
+
+      // Responder con un error si no hay disponibilidad
+      return res.status(400).json({ 
+        message: 'No hay disponibilidad para esta habitación', 
+        disponibilidad_actual 
+      });
     }
 
-    res.status(201).json({ message: 'Reserva creada con éxito', reservaId: result.insertId });
+    // Obtener la disponibilidad actualizada de la habitación
+    const [habitacion] = await pool.query('SELECT disponibilidad FROM habitaciones WHERE id = ?', [habitacion_id]);
+    const disponibilidad_actual = habitacion[0]?.disponibilidad || 0;
+
+    // Responder con éxito
+    res.status(201).json({
+      message: 'Reserva creada con éxito',
+      reservaId: result.insertId,
+      disponibilidad_actual, // Enviar la disponibilidad actual al cliente
+      servicios_adicionales: servicios_adicionales || [] // Enviar los servicios adicionales
+    });
   } catch (error) {
     console.error('Error al crear la reserva:', error);
     res.status(500).json({ message: 'Error al crear la reserva' });
   }
+
 };
 
 export const crearHabitacion = async (req, res) => {
@@ -145,5 +166,34 @@ export const crearHabitacion = async (req, res) => {
   } 
   catch (error) {
     res.status(500).json({ message: 'Error en el servidor' });
+  }
+};
+
+export const getHabitacionById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [habitacion] = await pool.query('SELECT * FROM habitaciones WHERE id = ?', [id]);
+
+    if (habitacion.length === 0) {
+      return res.status(404).json({ message: 'Habitación no encontrada' });
+    }
+
+    res.status(200).json(habitacion[0]);
+  } catch (error) {
+    console.error('Error al obtener la habitación:', error);
+    res.status(500).json({ message: 'Error al obtener la habitación' });
+  }
+};
+
+export const getAllHabitaciones = async (req, res) => {
+  try {
+    // Consulta SQL para obtener todas las habitaciones
+    const [habitaciones] = await pool.query('SELECT * FROM habitaciones');
+
+    res.status(200).json(habitaciones); // Devuelve las habitaciones en formato JSON
+  } catch (error) {
+    console.error('Error al obtener las habitaciones:', error);
+    res.status(500).json({ message: 'Error al obtener las habitaciones' });
   }
 };

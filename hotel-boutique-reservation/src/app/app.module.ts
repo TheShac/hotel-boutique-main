@@ -27,6 +27,7 @@ import { AgregarServicioDialogModule } from './agregar-servicio-dialog/agregar-s
 import { EditarServicioDialogComponent } from './editar-servicio-dialog/editar-servicio-dialog.component';
 import { AppRoutingModule } from './app-routing.module';
 import { EmpleadoComponent } from './empleado/empleado.component';
+import { PagarComponent } from './pagar/pagar.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { EmpleadoComponent } from './empleado/empleado.component';
     FooterComponent,
     GestionarServiciosComponent,
     EditarServicioDialogComponent,
-    EmpleadoComponent
+    EmpleadoComponent,
+    PagarComponent
   ],
   imports: [
     BrowserModule,

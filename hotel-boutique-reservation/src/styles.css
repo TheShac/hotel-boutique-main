@@ -44,7 +44,7 @@ mat-form-field {
 
 /* Ajusta el tamaño de los botones */
 button {
-  width: 400%; /* Asegura que los botones sean de ancho completo */
+  width: 100%; /* Asegura que los botones sean de ancho completo */
   padding: 12px; /* Aumenta el padding para un botón más amplio */
 }
 

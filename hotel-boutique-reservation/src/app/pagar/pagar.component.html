@@ -1,0 +1,90 @@
+<div class="card-container" (click)="toggleCard()">
+    <div class="card" [class.flipped]="flipped">
+      <!-- Cara Frontal de la Tarjeta -->
+      <div class="card-face card-front">
+        <div class="chip-container">
+            <img src="assets/img/chip-tarjeta.png" alt="Chip Tarjeta" class="chip-image" />
+        </div>
+        <div class="card-numer-tarjet">Numero de Tarjeta</div>
+        <div class="card-number">{{ cardNumber || '#### #### #### ####' }}</div>
+
+        <div class="card-name">{{ cardholderName || 'Nombre Tarjeta' }}</div>
+        <div class="card-expiry-label">Expiración</div>
+        <div class="card-expiry">{{ cardMonth || 'MM' }}/{{ cardYear || 'AA' }}</div>
+      </div>
+      <!-- Cara Trasera de la Tarjeta -->
+      <div class="card-face card-back">
+        <div class="banda-negra"></div>
+        <div class="firma">
+          <div class="firma-line"></div>
+          <div class="ccv">{{ cvv || '###' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="formulario-container">
+    <form>
+      <div>
+        <label for="cardNumber">Número Tarjeta</label>
+        <input
+  id="card-number"
+  type="text"
+  placeholder="#### #### #### ####"
+  maxlength="16"
+  (keypress)="allowOnlyDigits($event)"
+  (input)="updateCardNumber($event)"
+  [value]="cardNumber"
+  required
+/>
+
+
+      </div>
+      <div>
+        <input
+  id="card-name"
+  type="text"
+  placeholder="Nombre Tarjeta"
+  maxlength="30"
+  (keypress)="allowOnlyLetters($event)"
+  (input)="updateCardName($event)"
+  [value]="cardholderName"
+  required
+/>
+
+
+      </div>
+      <div>
+        <label>Expiración</label>
+        <select [(ngModel)]="cardMonth" name="cardMonth" required>
+          <option value="">Mes</option>
+          <option *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" [value]="month">{{ month }}</option>
+        </select>
+        <select [(ngModel)]="cardYear" name="cardYear" required>
+            <option value="" disabled selected>Año</option>
+            <option *ngFor="let year of getCardYears()" [value]="year">{{ year }}</option>
+          </select>
+          
+      </div>
+      <div>
+        <label for="cardCCV">CCV</label>
+        <input
+  id="card-cvv"
+  type="text"
+  placeholder="CVV"
+  maxlength="3"
+  (keypress)="allowOnlyNumbersForCvv($event)"
+  (input)="updateCvv($event)"
+  [value]="cvv"
+  required
+/>
+
+
+      </div>
+      <button class="btn btn-primary" (click)="guardarReserva()">Pagar</button>
+
+
+    </form>
+  </div>
+  
+

@@ -1,5 +1,3 @@
-
-
 <div class="container" *ngIf="habitacion">
   <!-- Botón de Volver al catálogo -->
   <button class="btn btn-secondary mb-4" (click)="volverAlCatalogo()">Volver al Catálogo</button>
@@ -10,6 +8,23 @@
   <p><strong>Disponibilidad:</strong> {{ habitacion.disponibilidad }}</p>
   <p><strong>Descripción:</strong> {{ habitacion.descripcion }}</p>
 
+  <!-- Servicios adicionales -->
+  <h3>Servicios adicionales</h3>
+  <form>
+    <div class="form-check">
+      <input type="checkbox" id="spa" [(ngModel)]="serviciosSeleccionados.spa" class="form-check-input" name="spa">
+      <label for="spa" class="form-check-label">Tratamientos de Spa</label>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" id="cenas" [(ngModel)]="serviciosSeleccionados.cenas" class="form-check-input" name="cenas">
+      <label for="cenas" class="form-check-label">Cenas Privadas</label>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" id="transporte" [(ngModel)]="serviciosSeleccionados.transporte" class="form-check-input" name="transporte">
+      <label for="transporte" class="form-check-label">Transporte</label>
+    </div>
+  </form>
+
   <!-- Imágenes de la habitación -->
   <h3>Imágenes de la habitación</h3>
   <div class="imagenes">
@@ -17,5 +32,9 @@
   </div>
 
   <!-- Botón de Reservar Habitación -->
-  <button (click)="reservarHabitacion()" class="btn btn-primary mt-4">Reservar Habitación</button>
-</div>
+  <!-- <button (click)="reservarHabitacion()" class="btn btn-primary mt-4">Reservar Habitación</button>
+</div>-->
+
+<button
+  class="btn btn-primary"
+(click)="irAPagar()">Ir a Pagar</button>
