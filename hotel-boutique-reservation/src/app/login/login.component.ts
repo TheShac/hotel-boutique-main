@@ -9,6 +9,9 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+login() {
+throw new Error('Method not implemented.');
+}
   loginForm: FormGroup;
 
   constructor(

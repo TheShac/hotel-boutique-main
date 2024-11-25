@@ -40,42 +40,94 @@ export const login = async (req, res) => {
 
 // Controlador para registrar
 export const registerUser = async (req, res) => {
-    const { email, password } = req.body;
-    const rol = req.body.rol || 'client';
-  
-    // Verificar que todos los datos requeridos estén presentes
-    if (!email || !password || !['admin', 'client'].includes(rol)){
-      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-    }
-  
-    // Encriptar la contraseña antes de guardarla
-    const hashedPassword = await bcrypt.hash(password, 10);
-  
-    try {
-      const [result] = await pool.query(
-        'INSERT INTO usuario (username, password, rol) VALUES (?, ?, ?)',
-        [email, hashedPassword, rol]
-      );
-      res.status(201).json({ message: 'Usuario registrado con éxito', userId: result.insertId });
-    } 
-    catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al registrar el usuario' });
-    }
-  };
 
+  try {
+    console.log(req.body)
+    const { nombre, apellido, email, password, rol } = req.body;
 
+    const userRole = rol || 'client';
+  
+    const [rows] = await pool.query('INSERT INTO user (nombre, apellido, email, password, rol) VALUES (?, ?, ?, ?, ?)',[nombre, apellido, email, password, userRole]);
+    res.send({
+      rows
+    })
+  } catch (error) {
+    res.status(500).json({ message: 'Error en el servidor' });
+    
+  }
+
+};
 
 export const ver = async (req, res) => {
    
-    try {
-      const [result] = await pool.query(
-        'select * from usuario'
-      );
-      res.status(201).json({ result });
+  try {
+    const [result] = await pool.query(
+      'select * from usuario'
+    );
+    res.status(201).json({ result });
+  } 
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al registrar el usuario' });
+  }
+};
+
+export const usuario = async(req, res) => {
+
+  const id = req.session.userId;
+
+  try {
+    const [rows] = await pool.query('SELECT * FROM user WHERE id = ?', [id]);
+    
+    if (rows.length > 0) {
+      const user = rows[0];
+      res.status(200).json({
+        success: true,
+        user: {
+          id: user.id,
+          nombre: user.nombre,
+          apellido: user.apellido,
+          email: user.email
+        }
+      });
     } 
-    catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al registrar el usuario' });
+    else {
+      res.status(404).json({ success: false, message: 'Usuario no encontrado' });
     }
-  };
+  }
+  catch (error) {
+    console.error('Error al obtener datos del usuario:', error);
+    res.status(500).json({ success: false, message: 'Error en el servidor' });
+  }
+};
+
+export const crearReserva = async (req, res) => {
+  const { usuario_id, habitacion_id } = req.body;
+
+  if (!usuario_id || !habitacion_id) {
+    return res.status(400).json({ message: 'Datos faltantes para la reserva' });
+  }
+
+  try {
+    // Insertar reserva
+    const [result] = await pool.query(
+      'INSERT INTO reservas (usuario_id, habitacion_id) VALUES (?, ?)',
+      [usuario_id, habitacion_id]
+    );
+
+    // Actualizar disponibilidad de la habitación
+    const [updateResult] = await pool.query(
+      'UPDATE habitaciones SET disponibilidad = disponibilidad - 1 WHERE id = ? AND disponibilidad > 0',
+      [habitacion_id]
+    );
+
+    if (updateResult.affectedRows === 0) {
+      return res.status(400).json({ message: 'No hay disponibilidad para esta habitación' });
+    }
+
+    res.status(201).json({ message: 'Reserva creada con éxito', reservaId: result.insertId });
+  } catch (error) {
+    console.error('Error al crear la reserva:', error);
+    res.status(500).json({ message: 'Error al crear la reserva' });
+  }
+};
