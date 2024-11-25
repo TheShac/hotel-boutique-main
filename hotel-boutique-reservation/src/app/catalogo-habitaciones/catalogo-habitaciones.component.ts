@@ -57,42 +57,42 @@ export class CatalogoHabitacionesComponent {
         id: 5,
         nombre: 'Habitación Familiar',
         precio: 129990,
-        disponibilidad: 10,
+        disponibilidad: 5,
         imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
       },
       {
         id: 6,
         nombre: 'Habitación Suite Deluxe',
         precio: 189990,
-        disponibilidad: 3,
+        disponibilidad: 5,
         imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
       },
       {
         id: 7,
         nombre: 'Habitación Junior Suite',
         precio: 179990,
-        disponibilidad: 4,
+        disponibilidad: 5,
         imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
       },
       {
         id: 8,
         nombre: 'Habitación Premium',
         precio: 199990,
-        disponibilidad: 2,
+        disponibilidad: 5,
         imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
       },
       {
         id: 9,
         nombre: 'Habitación Doble Confort',
         precio: 159990,
-        disponibilidad: 3,
+        disponibilidad: 5,
         imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
       },
       {
         id: 10,
         nombre: 'Habitación Individual Económica',
         precio: 69990,
-        disponibilidad: 8,
+        disponibilidad: 5,
         imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
       }
     ];

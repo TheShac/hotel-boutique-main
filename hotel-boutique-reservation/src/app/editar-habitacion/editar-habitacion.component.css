@@ -6,6 +6,8 @@ h2 {
 }
 
 form {
+  max-width: 400px; /* Ancho máximo del formulario */
+  margin: 0 auto; /* Centra el formulario horizontalmente */
   padding: 20px; /* Espacio interno */
   background-color: white; /* Color de fondo blanco para el modal */
   border-radius: 8px; /* Bordes redondeados */
@@ -31,18 +33,4 @@ button {
 /* Efecto de hover para el botón */
 button:hover {
   background-color: #303f9f; /* Color más oscuro al pasar el ratón */
-}
-.custom-dialog .mat-dialog-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1050;
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }

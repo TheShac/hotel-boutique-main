@@ -144,12 +144,10 @@ export class AdministradorComponent implements OnInit {
   }
 
   abrirDialogo(habitacion: Habitacion): void {
-    //this.mostrarDiv = false; 
+    
     const dialogRef = this.dialog.open(EditarHabitacionComponent, {
       data: habitacion, // Pasar la habitación a editar al diálogo
-      width: '80%',  // Ajusta el tamaño según sea necesario
-      height: 'auto', // Ajusta la altura según el contenido
-      panelClass: 'custom-dialog'  // Aplica la clase personalizada al abrir el diálogo
+      
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
