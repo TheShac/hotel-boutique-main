@@ -23,14 +23,23 @@ export class RegisterComponent {
 
   // Método para registrar un nuevo usuario.
   register() {
+    if (!this.nombre || !this.apellido || !this.email || !this.password) {
+      alert('Por favor, complete todos los campos.');
+      return;
+    }
+    if (this.password.length < 8) {
+      alert('La contraseña debe tener al menos 8 caracteres.');
+      return;
+    }
+  
     this.authService.register(this.nombre, this.apellido, this.email, this.password, this.role).subscribe(
       (response) => {
-        alert('Usuario registrado con éxito'); // Muestra un mensaje de éxito.
-        this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión.
+        alert('Usuario registrado con éxito');
+        this.router.navigate(['/login']);
       },
       (error) => {
-        alert('Error al registrar usuario'); // Muestra un mensaje de error en caso de fallar el registro.
-        console.error(error); // Muestra el error en la consola para su depuración.
+        alert('Error al registrar usuario');
+        console.error(error);
       }
     );
   }

@@ -28,3 +28,18 @@
   font-size: 1rem;
   cursor: pointer;
 }
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.form-control.ng-touched.ng-invalid {
+  border-color: red;
+}
+
+.form-control.ng-touched.ng-valid {
+  border-color: green;
+}
+
