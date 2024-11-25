@@ -1,12 +1,16 @@
 <h2 mat-dialog-title>Editar Servicio</h2>
+<!-- Formulario para editar los detalles de un servicio -->
 <form #servicioForm="ngForm">
   <mat-dialog-content>
+    <!-- Contenedor de los campos del formulario -->
     <div>
+      <!-- Campo para editar el nombre del servicio -->
       <mat-form-field appearance="fill">
         <mat-label>Nombre del Servicio</mat-label>
         <input matInput [(ngModel)]="servicio.nombre" name="nombre" required />
       </mat-form-field>
 
+      <!-- Campo para editar la descripción del servicio -->
       <mat-form-field appearance="fill">
         <mat-label>Descripción</mat-label>
         <textarea
@@ -17,6 +21,7 @@
         ></textarea>
       </mat-form-field>
 
+      <!-- Campo para editar el precio del servicio -->
       <mat-form-field appearance="fill">
         <mat-label>Precio</mat-label>
         <input
@@ -31,7 +36,9 @@
   </mat-dialog-content>
 
   <mat-dialog-actions>
+    <!-- Botón para cancelar la edición -->
     <button mat-button (click)="cancelar()">Cancelar</button>
+    <!-- Botón para guardar los cambios -->
     <button mat-button [disabled]="!servicioForm.valid" (click)="guardar()">
       Guardar
     </button>
