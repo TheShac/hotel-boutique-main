@@ -1,19 +1,28 @@
 <nav class="navbar">
+     <!-- Logo del hotel con enlace a la página principal -->
     <a href="/"><img src="assets/46.png" alt="Logo Hotel Boutique" class="logo" /></a>
+    <!-- Nombre del hotel -->
     <a href="/"><span>El refugio del viajero</span></a>
 
+    <!-- Enlaces de navegación -->
     <div class="nav-links">
+      <!-- Enlace a la página de inicio -->
       <a routerLink="/" routerLinkActive="active">Inicio</a>
+      <!-- Enlace al catálogo de habitaciones -->
       <a routerLink="/catalogo" routerLinkActive="active">Catálogo</a>
       
+      <!-- Enlace visible solo para empleados -->
       <a *ngIf="isEmp()" routerLink="/empleado" routerLinkActive="active">Configuración Servicios</a>
+      <!-- Enlace visible solo para administradores -->
       <a *ngIf="isAdmin()" routerLink="/admin" routerLinkActive="active">Administración</a>
+      <!-- Enlaces visibles solo para clientes -->
       <a *ngIf="isClient()" routerLink="/carrito" routerLinkActive="active">Reservas</a>
       <a *ngIf="isClient()" routerLink="/perfil" routerLinkActive="active">Perfil</a>
       
+      <!-- Enlace para iniciar sesión (visible si no está autenticado) -->
       <a *ngIf="!isAuthenticated()" routerLink="/login" routerLinkActive="active">Iniciar Sesión</a>
+      <!-- Enlace para cerrar sesión (visible si está autenticado) -->
       <a *ngIf="isAuthenticated()" (click)="logout()">Cerrar Sesión</a>
     </div>
-
 </nav>
   
