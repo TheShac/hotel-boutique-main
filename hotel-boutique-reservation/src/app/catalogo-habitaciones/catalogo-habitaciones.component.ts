@@ -58,42 +58,42 @@ export class CatalogoHabitacionesComponent {
         nombre: 'Habitación Familiar',
         precio: 129990,
         disponibilidad: 10,
-        imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
+        imagenUrl: 'https://www.mator.es/wp-content/webpc-passthru.php?src=https://www.mator.es/wp-content/uploads/2020/09/limpiezahabitaciondehotel.jpg&nocache=1'
       },
       {
         id: 6,
         nombre: 'Habitación Suite Deluxe',
         precio: 189990,
         disponibilidad: 3,
-        imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
+        imagenUrl: 'https://itexa.es/blog/wp-content/uploads/2024/06/tipos-habitaciones-hotel-portada.jpg'
       },
       {
         id: 7,
         nombre: 'Habitación Junior Suite',
         precio: 179990,
         disponibilidad: 4,
-        imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
+        imagenUrl: 'https://plus.unsplash.com/premium_photo-1661964402307-02267d1423f5?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
       },
       {
         id: 8,
         nombre: 'Habitación Premium',
         precio: 199990,
         disponibilidad: 2,
-        imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
+        imagenUrl: 'https://plus.unsplash.com/premium_photo-1675616563084-63d1f129623d?q=80&w=1169&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
       },
       {
         id: 9,
         nombre: 'Habitación Doble Confort',
         precio: 159990,
         disponibilidad: 3,
-        imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
+        imagenUrl: 'https://emprendedores.es/wp-content/uploads//iStock-907621754-e1639556826504-1024x576.jpg'
       },
       {
         id: 10,
         nombre: 'Habitación Individual Económica',
         precio: 69990,
         disponibilidad: 8,
-        imagenUrl: 'https://www.ahstatic.com/photos/b5w1_rodbaofz_00_p_1024x768.jpg'
+        imagenUrl: 'https://q-xx.bstatic.com/xdata/images/hotel/max500/579253081.jpg?k=57c8b5a5cbd6bbe09e73dcf2cdc821ad940d379df6be897aa484fb41334c60ec&o='
       }
     ];
   }
