@@ -41,20 +41,41 @@ export const login = async (req, res) => {
 export const registerUser = async (req, res) => {
 
   try {
-    console.log(req.body)
-    const { nombre, apellido, email, password, rol } = req.body;
+    const { nombre, apellido, email, password } = req.body;
 
-    const userRole = rol || 'client';
+    const userRole = 'client';
   
     const [rows] = await pool.query('INSERT INTO user (nombre, apellido, email, password, rol) VALUES (?, ?, ?, ?, ?)', [nombre, apellido, email, password, userRole]);
-    res.send({
-      rows
-    })
+    res.status(201).json({ 
+      success: true, 
+      message: 'Usuario registrado exitosamente', 
+      userId: rows.insertId 
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Error en el servidor' });
-    
+    res.status(500).json({ message: 'Error en el servidor' }); 
   }
+};
 
+export const updateUser = async (req, res) => {
+  try {
+    const { nombre, apellido, email } = req.body;  // Solo permitimos estos campos
+    const userId = req.params.id;
+
+    // Realiza la actualización sin tocar el rol
+    const [result] = await pool.query(
+      'UPDATE user SET nombre = ?, apellido = ?, email = ? WHERE id = ?',
+      [nombre, apellido, email, userId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Usuario no encontrado' });
+    }
+
+    res.json({ success: true, message: 'Usuario actualizado exitosamente' });
+  } catch (error) {
+    console.error('Error en el servidor:', error);
+    res.status(500).json({ success: false, message: 'Error en el servidor' });
+  }
 };
 
 export const ver = async (req, res) => {
@@ -195,5 +216,79 @@ export const getAllHabitaciones = async (req, res) => {
   } catch (error) {
     console.error('Error al obtener las habitaciones:', error);
     res.status(500).json({ message: 'Error al obtener las habitaciones' });
+  }
+};
+
+export const guardarReserva = async (req, res) => {
+  try {
+    console.log('Datos recibidos en el backend:', req.body);
+    
+    const {
+      usuario_id,
+      habitacion_id,
+      tarjeta_ultimos4,
+      tarjeta_nombre,
+      tarjeta_expiracion,
+      monto,
+      servicios_adicionales,
+      fecha_inicio,
+      fecha_termino
+    } = req.body;
+
+    // Verificar habitación
+    const [habitacion] = await pool.query(
+      'SELECT disponibilidad FROM habitaciones WHERE id = ?',
+      [habitacion_id]
+    );
+
+    if (!habitacion.length || habitacion[0].disponibilidad <= 0) {
+      return res.status(400).json({
+        message: 'La habitación no está disponible'
+      });
+    }
+
+    // Query ajustado a la estructura exacta de tu tabla
+    const query = `
+      INSERT INTO reservas 
+      (usuario_id, habitacion_id, tarjeta_ultimos4, tarjeta_nombre, 
+       tarjeta_expiracion, monto, servicios_adicionales, fecha_inicio, fecha_termino) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, STR_TO_DATE(?, '%Y-%m-%d'), STR_TO_DATE(?, '%Y-%m-%d'))
+    `;
+
+    const values = [
+      usuario_id,
+      habitacion_id,
+      tarjeta_ultimos4,
+      tarjeta_nombre,
+      tarjeta_expiracion,
+      monto,
+      servicios_adicionales, // Ya debe venir como string JSON
+      fecha_inicio,
+      fecha_termino
+    ];
+
+    console.log('Valores a insertar:', values);
+
+    const [result] = await pool.query(query, values);
+
+    // Actualizar disponibilidad
+    await pool.query(
+      'UPDATE habitaciones SET disponibilidad = disponibilidad - 1 WHERE id = ?',
+      [habitacion_id]
+    );
+
+    res.status(201).json({
+      message: 'Reserva creada exitosamente',
+      reservaId: result.insertId
+    });
+
+  } catch (error) {
+    console.error('Error detallado:', error);
+    console.error('SQL State:', error.sqlState);
+    console.error('SQL Message:', error.sqlMessage);
+    res.status(500).json({
+      message: `Error al procesar la reserva: ${error.sqlMessage || error.message}`,
+      sqlMessage: error.sqlMessage
+    });
   }
 };

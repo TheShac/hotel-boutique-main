@@ -1,43 +1,21 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 .container {
-    padding-top: 20px;
-  }
+  padding-top: 20px;
+}
 
 .card img {
   max-width: 100%;
   height: auto;
 }
-  
+
 .card-body {
-  padding: 14px;
-}
-  
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  height: 100%; /* Asegura que el fondo cubra toda la altura */
-  background-image: url('assets/navidad1.jpg');
-  background-size: cover; /* Hace que la imagen cubra completamente el fondo */
-  background-position: center; /* Centra la imagen */
-  background-repeat: no-repeat; /* Evita que la imagen se repita */
-  background-attachment: fixed; /* Hace que el fondo permanezca estático */
-  filter: sepia(0.2) saturate(1.3); /* Aplica un filtro para estilizar */
+  padding: 15px;
 }
 
+/* styles.css o styles.scss */
 
-footer {
-  width: 100%;
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-}
-
-main{
-  flex: 1;
-}
-
+/* Aumenta el ancho de los formularios */
 mat-form-field {
   width: 100%; /* Asegura que el campo de formulario ocupe todo el ancho disponible */
 }
@@ -51,17 +29,26 @@ button {
 /* Agrega un margen al contenedor del formulario */
 form {
   max-width: 600px; /* Define un ancho máximo para el formulario */
-  margin: center; /* Centra el formulario horizontalmente */
+  margin: 20px auto; /* Centra el formulario horizontalmente */
 }
 
+/* Estilo del título del formulario */
+h2 {
+  text-align: center; /* Centra el título */
+  margin-bottom: 20px; /* Espacio debajo del título */
+}
+
+/* Estilo adicional para el botón de guardar */
 button.mat-raised-button {
   font-size: 16px; /* Aumenta el tamaño de fuente del botón */
   margin-top: 20px; /* Espacio encima del botón */
 }
 
-h2 {
-  text-align: center; /* Centra el título */
-  margin-bottom: 20px; /* Espacio debajo del título */
+body {
+  background-image: url('/assets/navidad1.jpg');
+  background-size: cover; /* Hace que la imagen cubra completamente el fondo */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  background-attachment: fixed; /* Hace que el fondo permanezca estático */
+  
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

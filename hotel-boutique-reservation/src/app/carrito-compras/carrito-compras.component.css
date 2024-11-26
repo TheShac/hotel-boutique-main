@@ -1,0 +1,21 @@
+/* Contenedor principal del carrito */
+.container {
+    display: flex;
+    flex-direction: column; /* Organiza los elementos en una columna */
+    min-height: 100vh; /* Asegura que el contenedor ocupe al menos el 100% de la altura de la pantalla */
+  }
+  
+  /* El contenido del carrito ocupa el espacio restante */
+  .container > div {
+    flex-grow: 1; /* Esto asegura que el contenido ocupe todo el espacio disponible, empujando el footer hacia abajo */
+  }
+  
+  /* Estilos del footer */
+  .footer {
+    background-color: #033719; /* Color de fondo del footer */
+    color: white; /* Color del texto en el footer */
+    padding: 1rem; /* Espaciado interno en el footer */
+    text-align: center; /* Centra el texto en el footer */
+    width: 100%; /* Hace que el footer ocupe todo el ancho de la página */
+  }
+  

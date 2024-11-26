@@ -1,27 +1,64 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
+
+interface Reserva {
+  habitacion: {
+    id: number;
+    nombre: string;
+    precio: number;
+  };
+  servicios: string[];
+}
 
 @Component({
   selector: 'app-pagar',
   templateUrl: './pagar.component.html',
   styleUrls: ['./pagar.component.css']
 })
-export class PagarComponent {
-  cardNumber: string = ''; // Número de tarjeta
-  cardholderName: string = ''; // Nombre del titular
-  cardMonth: string = ''; // Mes de expiración
-  cardYear: string = ''; // Año de expiración
-  cvv: string = ''; // Código CVV
-  flipped: boolean = false; // Control de giro de la tarjeta
-  serviciosSeleccionados: any = []; // Servicios seleccionados
-  habitacionId: number | null = null; // ID de la habitación
-  monto: number = 0; // Monto de la reserva
+export class PagarComponent implements OnInit {
+  cardNumber: string = '';
+  cardholderName: string = '';
+  cardMonth: string = '';
+  cardYear: string = '';
+  cvv: string = '';
+  flipped: boolean = false;
+  serviciosSeleccionados: string[] = [];
+  habitacionId: number | null = null;
+  monto: number = 0;
+  habitacionNombre: string = '';
+  fechaInicio: string = '';
+  fechaTermino: string = '';
 
-  constructor(private router: Router, private http: HttpClient, private authService: AuthService ) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
-  // Alterna el giro de la tarjeta
+  ngOnInit(): void {
+    const reservaData = localStorage.getItem('reserva');
+    this.fechaInicio = localStorage.getItem('fechaInicio') || '';
+    this.fechaTermino = localStorage.getItem('fechaTermino') || '';
+
+    if (!reservaData || !this.fechaInicio || !this.fechaTermino) {
+      this.router.navigate(['/catalogo']);
+      return;
+    }
+
+    try {
+      const reserva: Reserva = JSON.parse(reservaData);
+      this.habitacionId = reserva.habitacion.id;
+      this.habitacionNombre = reserva.habitacion.nombre;
+      this.serviciosSeleccionados = reserva.servicios;
+      this.monto = reserva.habitacion.precio;
+    } catch (error) {
+      this.router.navigate(['/catalogo']);
+    }
+  }
+
   toggleCard(): void {
     this.flipped = !this.flipped;
   }
@@ -111,6 +148,133 @@ export class PagarComponent {
     } else {
       alert('Por favor, complete todos los campos.');
     }
+  }
+
+  procesarPago(): void {
+    if (this.validarFormulario()) {
+      const usuario = this.authService.getCurrentUser();
+      
+      if (!usuario) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Debe iniciar sesión para realizar una reserva',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
+        return;
+      }
+
+      const fechaInicio = localStorage.getItem('fechaInicio');
+      const fechaTermino = localStorage.getItem('fechaTermino');
+
+      if (!fechaInicio || !fechaTermino) {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Las fechas de reserva son requeridas',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        });
+        return;
+      }
+
+      const reserva = {
+        usuario_id: usuario.id,
+        habitacion_id: this.habitacionId,
+        tarjeta_ultimos4: this.cardNumber.slice(-4),
+        tarjeta_nombre: this.cardholderName,
+        tarjeta_expiracion: `${this.cardMonth}/${this.cardYear}`,
+        monto: Number(this.monto),
+        servicios_adicionales: JSON.stringify(this.serviciosSeleccionados),
+        fecha_inicio: fechaInicio,
+        fecha_termino: fechaTermino
+      };
+
+      this.http.post('http://localhost:3000/api/reservas', reserva)
+        .subscribe({
+          next: (response: any) => {
+            Swal.fire({
+              title: 'Éxito!',
+              text: 'Reserva realizada con éxito',
+              icon: 'success',
+              confirmButtonText: 'Ok'
+            }).then(() => {
+              localStorage.removeItem('reserva');
+              localStorage.removeItem('fechaInicio');
+              localStorage.removeItem('fechaTermino');
+              this.router.navigate(['/catalogo']);
+            });
+          },
+          error: (error) => {
+            Swal.fire({
+              title: 'Error!',
+              text: error.error?.message || 'Error al procesar la reserva',
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            });
+          }
+        });
+    }
+  }
+
+  validarFormulario(): boolean {
+    if (!this.cardNumber || !this.cardholderName || !this.cardMonth || !this.cardYear || !this.cvv) {
+      Swal.fire({
+        title: 'Error',
+        text: 'Por favor complete todos los campos de la tarjeta',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      });
+      return false;
+    }
+
+    if (this.cardNumber.length !== 16) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El número de tarjeta debe tener 16 dígitos',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      });
+      return false;
+    }
+
+    if (this.cvv.length !== 3) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El CVV debe tener 3 dígitos',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      });
+      return false;
+    }
+
+    return true;
+  }
+
+  calcularNoches(): number {
+    if (!this.fechaInicio || !this.fechaTermino) return 0;
+    const inicio = new Date(this.fechaInicio);
+    const fin = new Date(this.fechaTermino);
+    const diferencia = fin.getTime() - inicio.getTime();
+    return Math.ceil(diferencia / (1000 * 3600 * 24));
+  }
+
+  calcularTotalServicios(): number {
+    // Aquí puedes definir el precio de cada servicio
+    const preciosServicios: { [key: string]: number } = {
+      'Tratamientos de Spa': 50000,
+      'Cenas Privadas': 35000,
+      'Transporte': 25000
+    };
+
+    return this.serviciosSeleccionados.reduce((total, servicio) => {
+      return total + (preciosServicios[servicio] || 0);
+    }, 0);
+  }
+
+  calcularTotal(): number {
+    const totalHabitacion = this.monto * this.calcularNoches();
+    const totalServicios = this.calcularTotalServicios();
+    return totalHabitacion + totalServicios;
   }
 }
     

@@ -1,90 +1,205 @@
-<div class="card-container" (click)="toggleCard()">
-    <div class="card" [class.flipped]="flipped">
-      <!-- Cara Frontal de la Tarjeta -->
-      <div class="card-face card-front">
-        <div class="chip-container">
-            <img src="assets/img/chip-tarjeta.png" alt="Chip Tarjeta" class="chip-image" />
-        </div>
-        <div class="card-numer-tarjet">Numero de Tarjeta</div>
-        <div class="card-number">{{ cardNumber || '#### #### #### ####' }}</div>
+<div class="container">
+  <div class="row">
+    <!-- Columna izquierda con la tarjeta y formulario -->
+    <div class="col-md-7">
+      <div class="card-container" (click)="toggleCard()">
+        <div class="card" [class.flipped]="flipped">
+          <!-- Cara Frontal de la Tarjeta -->
+          <div class="card-face card-front">
+            <div class="chip-container">
+                <img src="assets/img/chip-tarjeta.png" alt="Chip Tarjeta" class="chip-image" />
+            </div>
+            <div class="card-numer-tarjet">Numero de Tarjeta</div>
+            <div class="card-number">{{ cardNumber || '#### #### #### ####' }}</div>
 
-        <div class="card-name">{{ cardholderName || 'Nombre Tarjeta' }}</div>
-        <div class="card-expiry-label">Expiración</div>
-        <div class="card-expiry">{{ cardMonth || 'MM' }}/{{ cardYear || 'AA' }}</div>
+            <div class="card-name">{{ cardholderName || 'Nombre Tarjeta' }}</div>
+            <div class="card-expiry-label">Expiración</div>
+            <div class="card-expiry">{{ cardMonth || 'MM' }}/{{ cardYear || 'AA' }}</div>
+          </div>
+          <!-- Cara Trasera de la Tarjeta -->
+          <div class="card-face card-back">
+            <div class="banda-negra"></div>
+            <div class="firma">
+              <div class="firma-line"></div>
+              <div class="ccv">{{ cvv || '###' }}</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- Cara Trasera de la Tarjeta -->
-      <div class="card-face card-back">
-        <div class="banda-negra"></div>
-        <div class="firma">
-          <div class="firma-line"></div>
-          <div class="ccv">{{ cvv || '###' }}</div>
+
+      <div class="formulario-container">
+        <form>
+          <div>
+            <label for="cardNumber">Número Tarjeta</label>
+            <input
+              id="cardNumber"
+              type="text"
+              placeholder="#### #### #### ####"
+              maxlength="16"
+              (keypress)="allowOnlyDigits($event)"
+              (input)="updateCardNumber($event)"
+              [value]="cardNumber"
+              required
+            />
+          </div>
+          <div>
+            <label for="cardName">Nombre Tarjeta</label>
+            <input
+              id="cardName"
+              type="text"
+              placeholder="Nombre Tarjeta"
+              maxlength="30"
+              (keypress)="allowOnlyLetters($event)"
+              (input)="updateCardName($event)"
+              [value]="cardholderName"
+              required
+            />
+          </div>
+          <div>
+            <label for="cardMonth">Mes de Expiración</label>
+            <select 
+              id="cardMonth" 
+              [(ngModel)]="cardMonth" 
+              name="cardMonth" 
+              required
+              title="Mes de expiración"
+            >
+              <option value="">Mes</option>
+              <option *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" [value]="month">{{ month }}</option>
+            </select>
+
+            <label for="cardYear">Año de Expiración</label>
+            <select 
+              id="cardYear" 
+              [(ngModel)]="cardYear" 
+              name="cardYear" 
+              required
+              title="Año de expiración"
+            >
+              <option value="" disabled selected>Año</option>
+              <option *ngFor="let year of getCardYears()" [value]="year">{{ year }}</option>
+            </select>
+          </div>
+          <div>
+            <label for="cardCVV">CVV</label>
+            <input
+              id="cardCVV"
+              type="text"
+              placeholder="CVV"
+              maxlength="3"
+              (keypress)="allowOnlyNumbersForCvv($event)"
+              (input)="updateCvv($event)"
+              [value]="cvv"
+              required
+            />
+          </div>
+          <button 
+            type="button" 
+            class="btn btn-primary" 
+            (click)="procesarPago()"
+          >
+            Pagar
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Nueva columna derecha con detalles de la reserva -->
+    <div class="col-md-5">
+      <div class="detalles-reserva">
+        <h3>Detalles de la Reserva</h3>
+        
+        <div class="detalle-item">
+          <h4>Habitación</h4>
+          <p class="nombre-habitacion">{{ habitacionNombre }}</p>
+          <p class="precio">Precio por noche: {{ monto | currency:'CLP':'symbol':'1.0-0' }}</p>
+        </div>
+
+        <div class="detalle-item">
+          <h4>Fechas</h4>
+          <p><strong>Check-in:</strong> {{ fechaInicio | date:'dd/MM/yyyy' }}</p>
+          <p><strong>Check-out:</strong> {{ fechaTermino | date:'dd/MM/yyyy' }}</p>
+          <p><strong>Duración:</strong> {{ calcularNoches() }} noche(s)</p>
+        </div>
+
+        <div class="detalle-item">
+          <h4>Servicios Adicionales</h4>
+          <ul class="servicios-lista">
+            <li *ngFor="let servicio of serviciosSeleccionados">{{ servicio }}</li>
+          </ul>
+        </div>
+
+        <div class="detalle-item total">
+          <h4>Resumen de Pago</h4>
+          <div class="d-flex justify-content-between">
+            <span>Subtotal habitación:</span>
+            <span>{{ monto | currency:'CLP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span>Servicios adicionales:</span>
+            <span>{{ calcularTotalServicios() | currency:'CLP':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="d-flex justify-content-between total-final">
+            <strong>Total:</strong>
+            <strong>{{ calcularTotal() | currency:'CLP':'symbol':'1.0-0' }}</strong>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  
-  <div class="formulario-container">
-    <form>
-      <div>
-        <label for="cardNumber">Número Tarjeta</label>
-        <input
-  id="card-number"
-  type="text"
-  placeholder="#### #### #### ####"
-  maxlength="16"
-  (keypress)="allowOnlyDigits($event)"
-  (input)="updateCardNumber($event)"
-  [value]="cardNumber"
-  required
-/>
+</div>
 
+<style>
+.detalles-reserva {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
 
-      </div>
-      <div>
-        <input
-  id="card-name"
-  type="text"
-  placeholder="Nombre Tarjeta"
-  maxlength="30"
-  (keypress)="allowOnlyLetters($event)"
-  (input)="updateCardName($event)"
-  [value]="cardholderName"
-  required
-/>
+.detalle-item {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
 
+.detalle-item:last-child {
+  border-bottom: none;
+}
 
-      </div>
-      <div>
-        <label>Expiración</label>
-        <select [(ngModel)]="cardMonth" name="cardMonth" required>
-          <option value="">Mes</option>
-          <option *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" [value]="month">{{ month }}</option>
-        </select>
-        <select [(ngModel)]="cardYear" name="cardYear" required>
-            <option value="" disabled selected>Año</option>
-            <option *ngFor="let year of getCardYears()" [value]="year">{{ year }}</option>
-          </select>
-          
-      </div>
-      <div>
-        <label for="cardCCV">CCV</label>
-        <input
-  id="card-cvv"
-  type="text"
-  placeholder="CVV"
-  maxlength="3"
-  (keypress)="allowOnlyNumbersForCvv($event)"
-  (input)="updateCvv($event)"
-  [value]="cvv"
-  required
-/>
+.detalle-item h4 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
 
+.servicios-lista {
+  list-style: none;
+  padding-left: 0;
+}
 
-      </div>
-      <button class="btn btn-primary" (click)="guardarReserva()">Pagar</button>
+.servicios-lista li {
+  padding: 5px 0;
+  color: #666;
+}
 
+.total-final {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 2px solid #eee;
+  font-size: 1.2rem;
+}
 
-    </form>
-  </div>
-  
+.nombre-habitacion {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 5px;
+}
+
+.precio {
+  color: #666;
+}
+</style>
+
 

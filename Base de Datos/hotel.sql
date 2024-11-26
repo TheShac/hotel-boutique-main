@@ -41,6 +41,8 @@ INSERT INTO habitaciones (id, nombre, descripcion, precio, disponibilidad) VALUE
 	(8, 'Habitación Premium', 'Habitación premium con diseño elegante y acabados de alta calidad', 199990.00, 10),
 	(9, 'Habitación Doble Confort', 'Habitación doble con todas las comodidades necesarias para un descanso agradable', 159990.00, 10),
 	(10, 'Habitación Individual Económica', 'Habitación individual económica pero con las comodidades necesarias', 69990.00, 10);
+DELETE FROM habitaciones WHERE id = 11;
+
 
 CREATE TABLE reservas
  (
@@ -59,5 +61,7 @@ CREATE TABLE reservas
   CONSTRAINT reservas_ibfk_1 FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE CASCADE,
   CONSTRAINT reservas_ibfk_2 FOREIGN KEY (habitacion_id) REFERENCES habitaciones (id) ON DELETE CASCADE
 );
+
+
 
 

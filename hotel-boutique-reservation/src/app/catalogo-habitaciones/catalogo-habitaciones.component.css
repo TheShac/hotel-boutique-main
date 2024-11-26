@@ -20,6 +20,7 @@ body {
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #f2f2f2, #e0e0e0); /* Degradado de fondo */
   background-attachment: fixed; /* Fondo fijo al hacer scroll */
+  
 }
 
 /* Contenedor de cada tarjeta individual */

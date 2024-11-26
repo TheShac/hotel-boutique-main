@@ -6,35 +6,99 @@
   <h2>{{ habitacion.nombre }}</h2>
   <p><strong>Precio:</strong> {{ habitacion.precio | currency:'CLP':'symbol':'1.0-0' }}</p>
   <p><strong>Disponibilidad:</strong> {{ habitacion.disponibilidad }}</p>
-  <p><strong>Descripción:</strong> {{ habitacion.descripcion }}</p>
+  <div class="descripcion">
+    <h3>Descripción:</h3> {{ habitacion.descripcion }}
+  </div>
+
+  <!-- Agregar sección de fechas -->
+  <div class="fechas-reserva" [class.disabled]="!estaDisponible()">
+    <h3>Fechas de Reserva</h3>
+    <div class="fecha-inputs">
+      <div class="fecha-grupo">
+        <label for="fechaInicio">Fecha de Inicio:</label>
+        <input 
+          type="date" 
+          id="fechaInicio" 
+          [(ngModel)]="fechaInicio"
+          [min]="fechaMinima"
+          [max]="fechaMaxima"
+          (change)="actualizarFechaMinimaSalida()"
+          required>
+      </div>
+      <div class="fecha-grupo">
+        <label for="fechaTermino">Fecha de Término:</label>
+        <input 
+          type="date" 
+          id="fechaTermino" 
+          [(ngModel)]="fechaTermino"
+          [min]="fechaMinimaSalida"
+          [max]="fechaMaxima"
+          required>
+      </div>
+    </div>
+  </div>
 
   <!-- Servicios adicionales -->
-  <h3>Servicios adicionales</h3>
-  <form>
-    <div class="form-check">
-      <input type="checkbox" id="spa" [(ngModel)]="serviciosSeleccionados.spa" class="form-check-input" name="spa">
-      <label for="spa" class="form-check-label">Tratamientos de Spa</label>
-    </div>
-    <div class="form-check">
-      <input type="checkbox" id="cenas" [(ngModel)]="serviciosSeleccionados.cenas" class="form-check-input" name="cenas">
-      <label for="cenas" class="form-check-label">Cenas Privadas</label>
-    </div>
-    <div class="form-check">
-      <input type="checkbox" id="transporte" [(ngModel)]="serviciosSeleccionados.transporte" class="form-check-input" name="transporte">
-      <label for="transporte" class="form-check-label">Transporte</label>
-    </div>
-  </form>
+  <div class="servicios-adicionales" [class.disabled]="!estaDisponible()">
+    <h3>Servicios adicionales</h3>
+    <form>
+      <div class="form-check">
+        <input 
+          type="checkbox" 
+          id="spa" 
+          [(ngModel)]="serviciosCheck.spa" 
+          (ngModelChange)="actualizarServicios('Tratamientos de Spa', $event)"
+          class="form-check-input" 
+          name="spa">
+        <label for="spa" class="form-check-label">Tratamientos de Spa</label>
+      </div>
+      <div class="form-check">
+        <input 
+          type="checkbox" 
+          id="cenas" 
+          [(ngModel)]="serviciosCheck.cenas" 
+          (ngModelChange)="actualizarServicios('Cenas Privadas', $event)"
+          class="form-check-input" 
+          name="cenas">
+        <label for="cenas" class="form-check-label">Cenas Privadas</label>
+      </div>
+      <div class="form-check">
+        <input 
+          type="checkbox" 
+          id="transporte" 
+          [(ngModel)]="serviciosCheck.transporte" 
+          (ngModelChange)="actualizarServicios('Transporte', $event)"
+          class="form-check-input" 
+          name="transporte">
+        <label for="transporte" class="form-check-label">Transporte</label>
+      </div>
+    </form>
+  </div>
+
+  <!-- Mostrar servicios seleccionados -->
+  <div *ngIf="serviciosSeleccionados.length > 0" class="servicios-seleccionados mt-3">
+    <h4>Servicios seleccionados:</h4>
+    <ul>
+      <li *ngFor="let servicio of serviciosSeleccionados">{{ servicio }}</li>
+    </ul>
+  </div>
 
   <!-- Imágenes de la habitación -->
   <h3>Imágenes de la habitación</h3>
-  <div class="imagenes">
-    <img *ngFor="let img of habitacion.fotos" [src]="img" alt="{{ habitacion.nombre }}" class="img-fluid" />
+  <div class="imagenes d-flex flex-wrap">
+    <img 
+      *ngFor="let img of habitacion.fotos" 
+      [src]="img" 
+      alt="{{ habitacion.nombre }}" 
+      class="img-thumbnail m-2 habitacion-imagen" />
   </div>
 
-  <!-- Botón de Reservar Habitación -->
-  <!-- <button (click)="reservarHabitacion()" class="btn btn-primary mt-4">Reservar Habitación</button>
-</div>-->
-
-<button
-  class="btn btn-primary"
-(click)="irAPagar()">Ir a Pagar</button>
+  <!-- Botón "Ir a Pagar" con validación de disponibilidad -->
+  <div class="mt-4">
+    <button class="btn btn-primary" 
+            [disabled]="!estaDisponible()"
+            (click)="irAPagar()">
+      {{ estaDisponible() ? 'Ir a Pagar' : 'No Disponible' }}
+    </button>
+  </div>
+</div>
